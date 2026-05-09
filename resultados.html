@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Resultados | Adoración Viva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-blue: #0a192f;
+            --light-blue: #112240;
+            --gold: #c5a059;
+            --text-gray: #a8b2d1;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin: 0;
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            border: 1px solid white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover { background: white; color: var(--dark-blue); }
+
+        /* Tabla de resultados */
+        .table-wrapper {
+            background: var(--light-blue);
+            border-radius: 15px;
+            overflow-x: auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        th {
+            background-color: rgba(197, 160, 89, 0.1);
+            color: var(--gold);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover { background: rgba(255,255,255,0.02); }
+
+        .rating-badge {
+            background: var(--gold);
+            color: var(--dark-blue);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .no-data {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Resultados de la Encuesta</h1>
+            <a href="index.html" class="btn-back">CERRAR SESIÓN</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th>Calif.</th>
+                        <th>Comentarios / Sugerencias</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-cuerpo">
+                    <!-- Los datos se cargarán aquí -->
+                </tbody>
+            </table>
+            <div id="loader" class="no-data">Cargando respuestas...</div>
+        </div>
+    </div>
+
+    <!-- SDK DE FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getFirestore, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9t_0J5Ttsz70SeeiKyQ5tI-6LEA2J9_g",
+            authDomain: "academia-encuesta.firebaseapp.com",
+            projectId: "academia-encuesta",
+            storageBucket: "academia-encuesta.firebasestorage.app",
+            messagingSenderId: "241229580560",
+            appId: "1:241229580560:web:0683886eae98bfc9f17d95",
+            measurementId: "G-2G791B45JW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function cargarResultados() {
+            const cuerpo = document.getElementById('tabla-cuerpo');
+            const loader = document.getElementById('loader');
+            
+            try {
+                // Consultar colección "encuestas" ordenada por fecha
+                const q = query(collection(db, "encuestas"), orderBy("fecha", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                loader.style.display = 'none';
+                cuerpo.innerHTML = '';
+
+                if (querySnapshot.empty) {
+                    cuerpo.innerHTML = '<tr><td colspan="5" class="no-data">Aún no hay respuestas registradas.</td></tr>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const fecha = data.fecha ? data.fecha.toDate().toLocaleDateString() : '---';
+                    
+                    const fila = `
+                        <tr>
+                            <td style="font-size: 0.8rem; color: #8892b0;">${fecha}</td>
+                            <td><strong>${data.nombre}</strong></td>
+                            <td>${data.area}</td>
+                            <td><span class="rating-badge">${data.calificacion}</span></td>
+                            <td style="font-size: 0.9rem; color: #a8b2d1;">
+                                <strong>Gusta:</strong> ${data.comentarios || 'N/A'}<br>
+                                <strong>Mejorar:</strong> ${data.sugerencias || 'N/A'}
+                            </td>
+                        </tr>
+                    `;
+                    cuerpo.innerHTML += fila;
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                loader.innerText = "Error al cargar datos. Asegúrate de que las reglas de Firestore permitan la lectura.";
+            }
+        }
+
+        cargarResultados();
+    </script>
+</body>
+</html>
