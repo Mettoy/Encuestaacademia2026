@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta | Academia Adoración Viva</title>
+    <!-- Google Fonts para una tipografía elegante -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Azul oscuro elegante */
+            --accent-color: #d4af37;  /* Dorado para resaltar */
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            text-align: center;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .divider {
+            height: 2px;
+            width: 60px;
+            background-color: var(--accent-color);
+            margin: 20px auto;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn-start {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn-start:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo">Adoración Viva</div>
+        <div class="divider"></div>
+        
+        <h1>Encuesta de Satisfacción y Crecimiento</h1>
+        
+        <p>
+            ¡Hola! Tu opinión es fundamental para nosotros. Queremos seguir mejorando nuestra enseñanza y ambiente para que tu experiencia en la <strong>Academia Adoración Viva</strong> sea transformadora. 
+            <br><br>
+            Te tomará menos de 5 minutos completar esta encuesta.
+        </p>
+
+        <!-- Cambia '#' por el enlace real de tu encuesta (Google Forms, Typeform, etc.) -->
+        <a href="#" class="btn-start">Comenzar Encuesta</a>
+
+        <footer>
+            &copy; 2024 Academia Adoración Viva. Todos los derechos reservados.
+        </footer>
+    </div>
+
+</body>
+</html>
