@@ -3,75 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta Estudiantil | Adoración Viva</title>
+    <title>Encuesta de Satisfacción | Adoración Viva</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --dark-blue: #0a192f;
-            --light-blue: #112240;
-            --gold: #c5a059;
-            --text-gray: #a8b2d1;
-        }
-
-        body {
-            background-color: var(--dark-blue);
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .form-container {
-            background: var(--light-blue);
-            max-width: 700px;
-            width: 100%;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            border-top: 4px solid var(--gold);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
+        :root { --dark-blue: #0a192f; --light-blue: #112240; --gold: #c5a059; --text-gray: #a8b2d1; }
+        body { background-color: var(--dark-blue); color: white; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .form-container { background: var(--light-blue); max-width: 700px; width: 100%; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-top: 4px solid var(--gold); }
+        .header { text-align: center; margin-bottom: 40px; }
         .header img { width: 100px; margin-bottom: 15px; }
         h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 0; }
-
-        .section-title {
-            color: var(--gold);
-            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
-            margin: 30px 0 15px;
-            padding-bottom: 5px;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-        }
-
+        .section-title { color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); margin: 30px 0 15px; padding-bottom: 5px; font-size: 1.1rem; text-transform: uppercase; }
         .question-group { margin-bottom: 25px; }
         label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; }
-
-        input[type="text"], select, textarea {
-            width: 100%; padding: 12px; background: var(--dark-blue);
-            border: 1px solid #233554; border-radius: 8px;
-            color: white; font-family: 'Montserrat', sans-serif; box-sizing: border-box;
-        }
-
-        .hidden-reason { display: none; margin-top: 10px; animation: fadeIn 0.5s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
+        input[type="text"], select, textarea { width: 100%; padding: 12px; background: var(--dark-blue); border: 1px solid #233554; border-radius: 8px; color: white; font-family: 'Montserrat', sans-serif; box-sizing: border-box; outline: none; }
+        .hidden-reason { display: none; margin-top: 10px; }
         .radio-group { display: flex; gap: 20px; background: var(--dark-blue); padding: 10px; border-radius: 8px; border: 1px solid #233554; }
-
-        .btn-submit {
-            background: var(--gold); color: var(--dark-blue); width: 100%;
-            padding: 15px; border: none; border-radius: 50px;
-            font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
-            margin-top: 30px; text-transform: uppercase;
-        }
-
+        .btn-submit { background: var(--gold); color: var(--dark-blue); width: 100%; padding: 15px; border: none; border-radius: 50px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 30px; text-transform: uppercase; }
         .btn-submit:hover { transform: translateY(-3px); background: #e2be7a; box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
+        .btn-submit:disabled { background: #444; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -83,18 +32,13 @@
     </div>
 
     <form id="encuestaForm">
-        <!-- DATOS INICIALES -->
+        <!-- DATOS BÁSICOS -->
         <div class="question-group">
             <label>Instrumento</label>
             <select id="instrumento" required>
                 <option value="">Selecciona tu instrumento...</option>
-                <option>Piano</option>
-                <option>Guitarra Acústica</option>
-                <option>Guitarra Eléctrica</option>
-                <option>Canto</option>
-                <option>Batería</option>
-                <option>Violín</option>
-                <option>Bajo</option>
+                <option>Piano</option><option>Guitarra Acústica</option><option>Guitarra Eléctrica</option>
+                <option>Canto</option><option>Batería</option><option>Violín</option><option>Bajo</option>
                 <option>Iniciación Musical</option>
             </select>
         </div>
@@ -103,52 +47,46 @@
             <label>Horario</label>
             <select id="horario" required>
                 <option value="">Selecciona tu horario...</option>
-                <option>8:00 AM a 10:00 AM</option>
-                <option>9:00 AM a 11:00 AM</option>
-                <option>10:00 AM a 12:00 PM</option>
-                <option>1:00 PM a 3:00 PM</option>
-                <option>2:00 PM a 4:00 PM</option>
-                <option>3:00 PM a 5:00 PM</option>
+                <option>8:00 AM a 10:00 AM</option><option>9:00 AM a 11:00 AM</option>
+                <option>10:00 AM a 12:00 PM</option><option>1:00 PM a 3:00 PM</option>
+                <option>2:00 PM a 4:00 PM</option><option>3:00 PM a 5:00 PM</option>
             </select>
         </div>
 
+        <!-- SECCIÓN INSTRUMENTO -->
         <div class="section-title">Sobre tu Instrumento</div>
-
-        <!-- Pregunta 1 -->
+        
         <div class="question-group">
             <label>1. ¿Del 1 al 10 qué te ha parecido la enseñanza de tu instrumento?</label>
-            <select id="p1" required>
-                <option value="">Selecciona una nota...</option>
+            <select id="ensenanza_instrumento" required>
+                <option value="">Nota...</option>
                 <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                 <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
             </select>
         </div>
 
-        <!-- Pregunta 2 -->
         <div class="question-group">
             <label>2. ¿Sientes que has aprendido algo en el transcurso de tiempo estudiado?</label>
             <div class="radio-group">
-                <label><input type="radio" name="p2" value="Si" onclick="toggleReason('reason2', false)" required> Sí</label>
-                <label><input type="radio" name="p2" value="No" onclick="toggleReason('reason2', true)"> No</label>
+                <label><input type="radio" name="aprendio_instrumento" value="Si" onclick="document.getElementById('reason2').style.display='none'" required> Sí</label>
+                <label><input type="radio" name="aprendio_instrumento" value="No" onclick="document.getElementById('reason2').style.display='block'"> No</label>
             </div>
             <div id="reason2" class="hidden-reason">
-                <textarea id="p2_porque" placeholder="¿Por qué sientes que no has aprendido?"></textarea>
+                <textarea id="aprendio_instrumento_porque" placeholder="Cuéntanos por qué..."></textarea>
             </div>
         </div>
 
-        <!-- Pregunta 3 -->
         <div class="question-group">
             <label>3. ¿Te sientes cómodo/a con el Maestro que te imparte tu instrumento?</label>
             <div class="radio-group">
-                <label><input type="radio" name="p3" value="Si" required> Sí</label>
-                <label><input type="radio" name="p3" value="No"> No</label>
+                <label><input type="radio" name="comodo_maestro" value="Si" required> Sí</label>
+                <label><input type="radio" name="comodo_maestro" value="No"> No</label>
             </div>
         </div>
 
-        <!-- Pregunta 4 -->
         <div class="question-group">
-            <label>4. Quien es tu maestro de instrumento</label>
-            <select id="p4" required>
+            <label>4. Quién es tu maestro de instrumento</label>
+            <select id="maestro_instrumento" required>
                 <option value="">Selecciona profesor...</option>
                 <option>Prof. Hilde</option><option>Prof. Meyling</option><option>Prof. Oscar</option>
                 <option>Prof. Peter</option><option>Prof. Edwing</option><option>Prof. Melky</option>
@@ -158,62 +96,57 @@
             </select>
         </div>
 
-        <!-- Pregunta 5 -->
         <div class="question-group">
             <label>5. ¿Qué mejorarías de tu curso o maestro?</label>
-            <textarea id="p5" required placeholder="Tu respuesta..."></textarea>
+            <textarea id="mejorar_maestro" required placeholder="Escribe aquí..."></textarea>
         </div>
 
+        <!-- SECCIÓN SOLFEO -->
         <div class="section-title">Sobre Solfeo</div>
 
-        <!-- Pregunta 6 -->
         <div class="question-group">
-            <label>6. ¿Del 1 al 10 que tal te ha parecido la enseñanza de Solfeo?</label>
-            <select id="p6" required>
-                <option value="">Selecciona una nota...</option>
+            <label>6. ¿Del 1 al 10 qué tal te ha parecido la enseñanza de Solfeo?</label>
+            <select id="ensenanza_solfeo" required>
+                <option value="">Nota...</option>
                 <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
                 <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
             </select>
         </div>
 
-        <!-- Pregunta 7 -->
         <div class="question-group">
             <label>7. ¿Sientes que has aprendido en el transcurso estudiado?</label>
             <div class="radio-group">
-                <label><input type="radio" name="p7" value="Si" onclick="toggleReason('reason7', false)" required> Sí</label>
-                <label><input type="radio" name="p7" value="No" onclick="toggleReason('reason7', true)"> No</label>
+                <label><input type="radio" name="aprendio_solfeo" value="Si" onclick="document.getElementById('reason7').style.display='none'" required> Sí</label>
+                <label><input type="radio" name="aprendio_solfeo" value="No" onclick="document.getElementById('reason7').style.display='block'"> No</label>
             </div>
             <div id="reason7" class="hidden-reason">
-                <textarea id="p7_porque" placeholder="¿Por qué?"></textarea>
+                <textarea id="aprendio_solfeo_porque" placeholder="¿Por qué?"></textarea>
             </div>
         </div>
 
-        <!-- Pregunta 8 -->
         <div class="question-group">
             <label>8. ¿Te sientes cómodo con el docente que te imparte solfeo?</label>
             <div class="radio-group">
-                <label><input type="radio" name="p8" value="Si" onclick="toggleReason('reason8', false)" required> Sí</label>
-                <label><input type="radio" name="p8" value="No" onclick="toggleReason('reason8', true)"> No</label>
+                <label><input type="radio" name="comodo_solfeo" value="Si" onclick="document.getElementById('reason8').style.display='none'" required> Sí</label>
+                <label><input type="radio" name="comodo_solfeo" value="No" onclick="document.getElementById('reason8').style.display='block'"> No</label>
             </div>
             <div id="reason8" class="hidden-reason">
-                <textarea id="p8_porque" placeholder="¿Por qué?"></textarea>
+                <textarea id="comodo_solfeo_porque" placeholder="¿Por qué?"></textarea>
             </div>
         </div>
 
-        <!-- Pregunta 9 -->
         <div class="question-group">
             <label>9. ¿Quién es tu profesor de Solfeo?</label>
-            <select id="p9" required>
+            <select id="maestro_solfeo" required>
                 <option value="">Selecciona profesor...</option>
                 <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option>
                 <option>Prof. Valeska</option><option>Prof. María Elena</option>
             </select>
         </div>
 
-        <!-- Pregunta 10 -->
         <div class="question-group">
-            <label>10. Dinos que te gustaría que hiciéramos para mejorar, queremos escucharte</label>
-            <textarea id="p10" required placeholder="Déjanos tu respuesta aquí..."></textarea>
+            <label>10. Dinos qué te gustaría que hiciéramos para mejorar</label>
+            <textarea id="mejorar_general" required placeholder="Queremos escucharte..."></textarea>
         </div>
 
         <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR ENCUESTA</button>
@@ -237,32 +170,29 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    window.toggleReason = (id, show) => {
-        document.getElementById(id).style.display = show ? 'block' : 'none';
-    };
-
     document.getElementById('encuestaForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btnEnviar');
         btn.disabled = true;
         btn.innerText = "GUARDANDO...";
 
+        // Captura de datos sincronizada con Resultados.html
         const datos = {
             instrumento: document.getElementById('instrumento').value,
             horario: document.getElementById('horario').value,
-            ensenanza_instrumento: document.getElementById('p1').value,
-            aprendio_instrumento: document.querySelector('input[name="p2"]:checked').value,
-            aprendio_instrumento_porque: document.getElementById('p2_porque').value,
-            comodo_maestro: document.querySelector('input[name="p3"]:checked').value,
-            maestro_instrumento: document.getElementById('p4').value,
-            mejorar_maestro: document.getElementById('p5').value,
-            ensenanza_solfeo: document.getElementById('p6').value,
-            aprendio_solfeo: document.querySelector('input[name="p7"]:checked').value,
-            aprendio_solfeo_porque: document.getElementById('p7_porque').value,
-            comodo_solfeo: document.querySelector('input[name="p8"]:checked').value,
-            comodo_solfeo_porque: document.getElementById('p8_porque').value,
-            maestro_solfeo: document.getElementById('p9').value,
-            mejorar_general: document.getElementById('p10').value,
+            ensenanza_instrumento: document.getElementById('ensenanza_instrumento').value,
+            aprendio_instrumento: document.querySelector('input[name="aprendio_instrumento"]:checked').value,
+            aprendio_instrumento_porque: document.getElementById('aprendio_instrumento_porque').value || "",
+            comodo_maestro: document.querySelector('input[name="comodo_maestro"]:checked').value,
+            maestro_instrumento: document.getElementById('maestro_instrumento').value,
+            mejorar_maestro: document.getElementById('mejorar_maestro').value,
+            ensenanza_solfeo: document.getElementById('ensenanza_solfeo').value,
+            aprendio_solfeo: document.querySelector('input[name="aprendio_solfeo"]:checked').value,
+            aprendio_solfeo_porque: document.getElementById('aprendio_solfeo_porque').value || "",
+            comodo_solfeo: document.querySelector('input[name="comodo_solfeo"]:checked').value,
+            comodo_solfeo_porque: document.getElementById('comodo_solfeo_porque').value || "",
+            maestro_solfeo: document.getElementById('maestro_solfeo').value,
+            mejorar_general: document.getElementById('mejorar_general').value,
             fecha: serverTimestamp()
         };
 
@@ -271,7 +201,8 @@
             alert("¡Encuesta guardada con éxito! Dios te bendiga.");
             window.location.href = "index.html";
         } catch (error) {
-            alert("Error al guardar. Intenta de nuevo.");
+            console.error("Error:", error);
+            alert("Error al conectar con Firebase. Revisa las reglas de seguridad.");
             btn.disabled = false;
             btn.innerText = "GUARDAR ENCUESTA";
         }
