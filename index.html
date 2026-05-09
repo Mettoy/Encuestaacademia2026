@@ -3,131 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta | Academia Adoración Viva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <title>Academia Adoración Viva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
+            --dark-blue: #0a192f; /* Azul súper oscuro */
             --gold: #c5a059;
-            --dark: #1b2631;
         }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark);
-            background-image: radial-gradient(circle at center, #2c3e50 0%, #1b2631 100%);
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--dark-blue);
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            color: white;
-            overflow: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 50px 30px;
-            border-radius: 25px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: fadeIn 1.5s ease;
+        /* Pantalla de inicio para activar audio */
+        #tap-to-start {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--dark-blue);
+            cursor: pointer;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-container img {
-            width: 180px;
-            height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+        .pulse {
+            animation: pulse-animation 2s infinite;
             color: var(--gold);
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
 
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: #d5dbdb;
-            margin-bottom: 35px;
+        @keyframes pulse-animation {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
         }
 
-        .btn-start {
-            background: var(--gold);
-            color: var(--dark);
-            padding: 18px 40px;
+        /* Contenedor de secuencias */
+        .scene {
+            display: none;
+            text-align: center;
+            max-width: 80%;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        .logo-img {
+            width: 200px;
+            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.2));
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-top: 20px;
+        }
+
+        .buttons-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 40px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3);
-            outline: none;
-        }
-
-        .btn-start:hover {
-            transform: translateY(-3px);
-            background: #e2be7a;
-            box-shadow: 0 15px 25px rgba(197, 160, 89, 0.4);
-        }
-
-        .footer-text {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 2px;
+            font-weight: bold;
             text-transform: uppercase;
+            transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-main { background: var(--gold); color: var(--dark-blue); }
+        .btn-secondary { background: transparent; color: white; border: 1px solid white; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+        /* Estilo del Modal para Contraseña */
+        #password-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: var(--dark-blue);
+            padding: 30px;
+            border: 1px solid var(--gold);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: none;
+            width: 80%;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-container">
-            <!-- Logo configurado -->
-            <img src="https://i.ibb.co/fzzW4BxH/logo.png" alt="Logo Adoración Viva">
-        </div>
-        
-        <h1>Adoración Viva</h1>
-        <p>Tu voz es parte de nuestra armonía. Haz clic en el botón para comenzar la encuesta mientras escuchas nuestra música.</p>
-
-        <!-- Botón de acción -->
-        <button class="btn-start" onclick="iniciarExperiencia()">COMENZAR ENCUESTA</button>
-
-        <div class="footer-text">Academia de Artes Escénicas</div>
+    <!-- PASO 0: Pantalla de "Carga" para habilitar el sonido -->
+    <div id="tap-to-start" onclick="startExperience()">
+        <img src="https://i.ibb.co/fzzW4BxH/logo.png" width="100" style="margin-bottom: 20px;">
+        <div class="pulse">TOCA PARA INGRESAR</div>
     </div>
 
-    <!-- AUDIO configurado con enlace directo de Dropbox -->
+    <!-- PASO 1: LOGO -->
+    <div id="scene1" class="scene">
+        <img src="https://i.ibb.co/fzzW4BxH/logo.png" alt="Logo" class="logo-img">
+    </div>
+
+    <!-- PASO 2: HOLA -->
+    <div id="scene2" class="scene">
+        <h2>Hola, Dios te bendiga</h2>
+    </div>
+
+    <!-- PASO 3: MEJORAR -->
+    <div id="scene3" class="scene">
+        <h2>Ayúdanos a mejorar</h2>
+    </div>
+
+    <!-- PASO 4: RESPONDE -->
+    <div id="scene4" class="scene">
+        <h2>Responde esta encuesta</h2>
+    </div>
+
+    <!-- PASO 5: BOTONES FINALES -->
+    <div id="scene5" class="scene">
+        <div class="buttons-group">
+            <button class="btn btn-main" onclick="location.href='encuesta.html'">RESPONDER</button>
+            <button class="btn btn-secondary" onclick="showModal()">VER RESULTADOS</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONTRASEÑA -->
+    <div id="password-modal">
+        <div class="modal-content">
+            <p>Ingresa la contraseña de acceso:</p>
+            <input type="password" id="pass-input" placeholder="Contraseña">
+            <br>
+            <button class="btn btn-main" onclick="checkPassword()">INGRESAR</button>
+            <button class="btn btn-secondary" style="margin-top:10px; font-size: 0.8rem;" onclick="hideModal()">CANCELAR</button>
+        </div>
+    </div>
+
     <audio id="bgMusic" loop>
         <source src="https://www.dropbox.com/scl/fi/c3o4j1tg1mxge0glgikqj/Glorioso-d-a-Glorious-Day-Passion-Ft.-Kristian-Stanfill-En-Esp-ol-Letra-Pista-M4A_128K.m4a?rlkey=asyz5vw3he62l02qy1j9cpvjx&st=wklkousf&raw=1" type="audio/mp4">
     </audio>
 
     <script>
-        function iniciarExperiencia() {
-            // Reproducir música
-            var musica = document.getElementById("bgMusic");
-            musica.play();
+        function startExperience() {
+            // Activar música
+            document.getElementById('bgMusic').play();
+            document.getElementById('tap-to-start').style.display = 'none';
 
-            // Abrir encuesta (REEMPLAZA ESTE LINK POR TU GOOGLE FORMS)
-            setTimeout(function() {
-                window.open("https://docs.google.com/forms/d/e/TU_ID_AQUI/viewform", "_blank");
-            }, 600);
+            // Iniciar secuencia de tiempos
+            showScene('scene1', 0);
+            showScene('scene2', 3000); // Aparece a los 3 seg
+            showScene('scene3', 6000); // Aparece a los 6 seg
+            showScene('scene4', 9000); // Aparece a los 9 seg
+            showScene('scene5', 12000); // Botones finales
+        }
+
+        function showScene(id, delay) {
+            setTimeout(() => {
+                // Ocultar todas las escenas
+                document.querySelectorAll('.scene').forEach(s => s.style.display = 'none');
+                // Mostrar la actual
+                document.getElementById(id).style.display = 'block';
+            }, delay);
+        }
+
+        function showModal() { document.getElementById('password-modal').style.display = 'flex'; }
+        function hideModal() { document.getElementById('password-modal').style.display = 'none'; }
+
+        function checkPassword() {
+            const pass = document.getElementById('pass-input').value.toLowerCase();
+            if (pass === "academiarobles") {
+                location.href = 'Resultados.html';
+            } else {
+                alert("Contraseña incorrecta");
+            }
         }
     </script>
-
 </body>
 </html>
