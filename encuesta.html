@@ -3,211 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta de Satisfacción | Adoración Viva</title>
-    <!-- Fonts & Animations -->
+    <title>Evaluación Académica | Adoración Viva</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
     <style>
         :root { 
             --dark-blue: #0a192f; 
             --light-blue: #112240; 
             --gold: #c5a059; 
             --text-gray: #a8b2d1; 
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body { 
             background-color: var(--dark-blue); 
             color: white; 
             font-family: 'Montserrat', sans-serif; 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            justify-content: center; 
-            overflow-x: hidden;
+            margin: 0; padding: 20px; 
+            display: flex; justify-content: center; 
         }
 
         .form-container { 
             background: var(--light-blue); 
-            max-width: 700px; 
-            width: 100%; 
-            padding: 40px; 
-            border-radius: 20px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
-            border-top: 4px solid var(--gold);
-            animation: fadeInUp; /* Entrada suave */
-            animation-duration: 0.8s;
+            max-width: 800px; width: 100%; 
+            padding: 40px; border-radius: 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            border-top: 5px solid var(--gold);
+            animation: fadeInDown; animation-duration: 0.8s;
         }
 
         .header { text-align: center; margin-bottom: 40px; }
-        .header img { 
-            width: 100px; 
-            margin-bottom: 15px; 
-            transition: var(--transition);
-        }
-        .header img:hover { transform: rotate(5deg) scale(1.1); }
-
-        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 0; }
+        .header img { width: 110px; margin-bottom: 15px; transition: var(--transition); }
+        .header img:hover { transform: scale(1.1) rotate(3deg); }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin: 0; }
 
         .section-title { 
-            color: var(--gold); 
-            border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
-            margin: 40px 0 20px; 
-            padding-bottom: 10px; 
-            font-size: 1.1rem; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+            margin: 40px 0 20px; padding-bottom: 10px; 
+            font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .question-group { margin-bottom: 25px; transition: var(--transition); }
-
-        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
-
-        input[type="text"], select, textarea { 
-            width: 100%; padding: 14px; 
-            background: var(--dark-blue); 
-            border: 1px solid #233554; 
-            border-radius: 12px; 
-            color: white; 
-            font-family: 'Montserrat', sans-serif; 
-            box-sizing: border-box; 
-            outline: none; 
-            transition: var(--transition);
+        .instruction { 
+            background: rgba(197, 160, 89, 0.1); padding: 15px; 
+            border-radius: 10px; font-size: 0.85rem; margin-bottom: 25px;
+            border-left: 3px solid var(--gold); color: var(--text-gray);
         }
 
-        input:focus, select:focus, textarea:focus { 
-            border-color: var(--gold); 
-            box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
-            transform: translateY(-2px);
-        }
+        .question-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 12px; font-weight: 600; color: #fff; }
 
-        /* Animación para campos ocultos */
-        .hidden-reason { 
-            display: none; 
-            margin-top: 15px; 
-            animation: fadeInDown 0.4s;
+        select, textarea { 
+            width: 100%; padding: 14px; background: var(--dark-blue); 
+            border: 1px solid #233554; border-radius: 12px; color: white; 
+            font-family: 'Montserrat', sans-serif; outline: none; transition: var(--transition);
         }
+        select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(197, 160, 89, 0.2); }
 
-        .radio-group { 
-            display: flex; 
-            gap: 15px; 
-            background: var(--dark-blue); 
-            padding: 5px; 
-            border-radius: 12px; 
-            border: 1px solid #233554; 
-        }
-
-        .radio-option {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: var(--transition);
-            display: flex;
+        /* Estilo de Tabla de Evaluación (Escala 1-5) */
+        .rating-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            background: rgba(10, 25, 47, 0.5);
+            padding: 12px 20px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            transition: var(--transition);
         }
-
-        .radio-option:hover { background: rgba(197, 160, 89, 0.1); }
+        .rating-row:hover { background: rgba(197, 160, 89, 0.05); transform: translateX(5px); }
+        .rating-label { font-size: 0.9rem; color: var(--text-gray); }
+        .options { display: flex; gap: 10px; }
+        
+        .radio-btn {
+            appearance: none; width: 35px; height: 35px;
+            border: 2px solid #233554; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition); position: relative;
+        }
+        .radio-btn::before { content: attr(data-val); color: var(--text-gray); font-weight: bold; }
+        .radio-btn:checked { background: var(--gold); border-color: var(--gold); }
+        .radio-btn:checked::before { color: var(--dark-blue); }
 
         .btn-submit { 
-            background: var(--gold); 
-            color: var(--dark-blue); 
-            width: 100%; 
-            padding: 18px; 
-            border: none; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            font-size: 1.1rem; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            margin-top: 30px; 
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: var(--gold); color: var(--dark-blue); 
+            width: 100%; padding: 20px; border: none; border-radius: 50px; 
+            font-weight: bold; font-size: 1.2rem; cursor: pointer; 
+            transition: var(--transition); margin-top: 40px; text-transform: uppercase;
         }
+        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(197, 160, 89, 0.4); }
 
-        .btn-submit:hover { 
-            transform: scale(1.02); 
-            background: #e2be7a; 
-            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); 
+        @media (max-width: 600px) {
+            .rating-row { grid-template-columns: 1fr; gap: 15px; text-align: center; }
+            .options { justify-content: center; }
         }
-
-        .btn-submit:active { transform: scale(0.98); }
-
-        /* Scrollbar personalizada */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark-blue); }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <div class="header animate__animated animate__fadeIn">
+    <div class="header">
         <img src="https://i.ibb.co/fzzW4BxH/logo.png" alt="Logo">
-        <h1>Encuesta de Satisfacción</h1>
+        <h1>Encuesta de Evaluación</h1>
     </div>
 
-    <form id="encuestaForm">
-        <!-- DATOS BÁSICOS -->
+    <form id="evaluacionForm">
         <div class="question-group">
-            <label>Instrumento</label>
-            <select id="instrumento" required>
-                <option value="">Selecciona tu instrumento...</option>
+            <label>Curso / Instrumento</label>
+            <select id="curso" required>
+                <option value="">Selecciona tu curso...</option>
                 <option>Piano</option><option>Guitarra Acústica</option><option>Guitarra Eléctrica</option>
                 <option>Canto</option><option>Batería</option><option>Violín</option><option>Bajo</option>
                 <option>Iniciación Musical</option>
             </select>
         </div>
 
-        <div class="question-group">
-            <label>Horario</label>
-            <select id="horario" required>
-                <option value="">Selecciona tu horario...</option>
-                <option>8:00 AM a 10:00 AM</option><option>9:00 AM a 11:00 AM</option>
-                <option>10:00 AM a 12:00 PM</option><option>1:00 PM a 3:00 PM</option>
-                <option>2:00 PM a 4:00 PM</option><option>3:00 PM a 5:00 PM</option>
-            </select>
+        <div class="instruction">
+            <strong>Escala de Calificación:</strong><br>
+            1 = Muy malo | 2 = Malo | 3 = Regular | 4 = Bueno | 5 = Excelente
         </div>
 
-        <!-- SECCIÓN INSTRUMENTO -->
-        <div class="section-title">Sobre tu Instrumento</div>
-        
-        <div class="question-group">
-            <label>1. ¿Del 1 al 10 qué te ha parecido la enseñanza de tu instrumento?</label>
-            <select id="ensenanza_instrumento" required>
-                <option value="">Nota...</option>
-                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-                <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-            </select>
-        </div>
-
-        <div class="question-group">
-            <label>2. ¿Sientes que has aprendido algo en el transcurso de tiempo estudiado?</label>
-            <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="aprendio_instrumento" value="Si" onclick="toggleReason('reason2', false)" required> Sí</label>
-                <label class="radio-option"><input type="radio" name="aprendio_instrumento" value="No" onclick="toggleReason('reason2', true)"> No</label>
+        <!-- EVALUACIÓN DEL CURSO INSTRUMENTO -->
+        <div class="section-title">Evaluación del Curso</div>
+        <div id="evaluacion_curso_instrumento">
+            <!-- Filas Generadas -->
+            <div class="rating-row">
+                <span class="rating-label">Organización del curso</span>
+                <div class="options">
+                    <input type="radio" name="inst_org" class="radio-btn" data-val="1" value="1" required>
+                    <input type="radio" name="inst_org" class="radio-btn" data-val="2" value="2">
+                    <input type="radio" name="inst_org" class="radio-btn" data-val="3" value="3">
+                    <input type="radio" name="inst_org" class="radio-btn" data-val="4" value="4">
+                    <input type="radio" name="inst_org" class="radio-btn" data-val="5" value="5">
+                </div>
             </div>
-            <div id="reason2" class="hidden-reason">
-                <textarea id="aprendio_instrumento_porque" placeholder="Cuéntanos por qué..."></textarea>
+            <div class="rating-row">
+                <span class="rating-label">Calidad del contenido</span>
+                <div class="options">
+                    <input type="radio" name="inst_cal" class="radio-btn" data-val="1" value="1" required>
+                    <input type="radio" name="inst_cal" class="radio-btn" data-val="2" value="2">
+                    <input type="radio" name="inst_cal" class="radio-btn" data-val="3" value="3">
+                    <input type="radio" name="inst_cal" class="radio-btn" data-val="4" value="4">
+                    <input type="radio" name="inst_cal" class="radio-btn" data-val="5" value="5">
+                </div>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">Prácticas y ejercicios</span>
+                <div class="options">
+                    <input type="radio" name="inst_prac" class="radio-btn" data-val="1" value="1" required>
+                    <input type="radio" name="inst_prac" class="radio-btn" data-val="2" value="2">
+                    <input type="radio" name="inst_prac" class="radio-btn" data-val="3" value="3">
+                    <input type="radio" name="inst_prac" class="radio-btn" data-val="4" value="4">
+                    <input type="radio" name="inst_prac" class="radio-btn" data-val="5" value="5">
+                </div>
+            </div>
+            <div class="rating-row">
+                <span class="rating-label">Ambiente de aprendizaje</span>
+                <div class="options">
+                    <input type="radio" name="inst_amb" class="radio-btn" data-val="1" value="1" required>
+                    <input type="radio" name="inst_amb" class="radio-btn" data-val="2" value="2">
+                    <input type="radio" name="inst_amb" class="radio-btn" data-val="3" value="3">
+                    <input type="radio" name="inst_amb" class="radio-btn" data-val="4" value="4">
+                    <input type="radio" name="inst_amb" class="radio-btn" data-val="5" value="5">
+                </div>
             </div>
         </div>
 
+        <!-- DOCENTE INSTRUMENTO -->
+        <div class="section-title">Evaluación del Docente (Instrumento)</div>
         <div class="question-group">
-            <label>3. ¿Te sientes cómodo/a con el Maestro que te imparte tu instrumento?</label>
-            <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="comodo_maestro" value="Si" required> Sí</label>
-                <label class="radio-option"><input type="radio" name="comodo_maestro" value="No"> No</label>
-            </div>
-        </div>
-
-        <div class="question-group">
-            <label>4. Quién es tu maestro de instrumento</label>
-            <select id="maestro_instrumento" required>
-                <option value="">Selecciona profesor...</option>
+            <select id="docente_inst" required>
+                <option value="">Selecciona tu profesor...</option>
                 <option>Prof. Hilde</option><option>Prof. Meyling</option><option>Prof. Oscar</option>
                 <option>Prof. Peter</option><option>Prof. Edwing</option><option>Prof. Melky</option>
                 <option>Prof. Rebeca</option><option>Prof. Abraham</option><option>Prof. George</option>
@@ -216,75 +181,161 @@
             </select>
         </div>
 
+        <div class="rating-row">
+            <span class="rating-label">Claridad al explicar</span>
+            <div class="options">
+                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Dominio musical y técnico</span>
+            <div class="options">
+                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Trato y respeto</span>
+            <div class="options">
+                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Motivación y apoyo</span>
+            <div class="options">
+                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+
+        <div class="question-group" style="margin-top:20px;">
+            <label>¿Qué fue lo mejor del curso y del docente?</label>
+            <textarea id="mejor_inst" placeholder="Escribe aquí..." required></textarea>
+        </div>
         <div class="question-group">
-            <label>5. ¿Qué mejorarías de tu curso o maestro?</label>
-            <textarea id="mejorar_maestro" required placeholder="Escribe aquí..."></textarea>
+            <label>¿Qué aspectos deberían mejorar?</label>
+            <textarea id="mejorar_inst" placeholder="Escribe aquí..." required></textarea>
         </div>
 
         <!-- SECCIÓN SOLFEO -->
-        <div class="section-title">Sobre Solfeo</div>
-
-        <div class="question-group">
-            <label>6. ¿Del 1 al 10 qué tal te ha parecido la enseñanza de Solfeo?</label>
-            <select id="ensenanza_solfeo" required>
-                <option value="">Nota...</option>
-                <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-                <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-            </select>
-        </div>
-
-        <div class="question-group">
-            <label>7. ¿Sientes que has aprendido en el transcurso estudiado?</label>
-            <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="aprendio_solfeo" value="Si" onclick="toggleReason('reason7', false)" required> Sí</label>
-                <label class="radio-option"><input type="radio" name="aprendio_solfeo" value="No" onclick="toggleReason('reason7', true)"> No</label>
-            </div>
-            <div id="reason7" class="hidden-reason">
-                <textarea id="aprendio_solfeo_porque" placeholder="¿Por qué?"></textarea>
+        <div class="section-title">Evaluación Curso de Solfeo</div>
+        <div class="rating-row">
+            <span class="rating-label">Organización del curso</span>
+            <div class="options">
+                <input type="radio" name="sol_org" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="sol_org" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="sol_org" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="sol_org" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="sol_org" class="radio-btn" data-val="5" value="5">
             </div>
         </div>
-
-        <div class="question-group">
-            <label>8. ¿Te sientes cómodo con el docente que te imparte solfeo?</label>
-            <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="comodo_solfeo" value="Si" onclick="toggleReason('reason8', false)" required> Sí</label>
-                <label class="radio-option"><input type="radio" name="comodo_solfeo" value="No" onclick="toggleReason('reason8', true)"> No</label>
+        <div class="rating-row">
+            <span class="rating-label">Claridad de los temas</span>
+            <div class="options">
+                <input type="radio" name="sol_tem" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="sol_tem" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="sol_tem" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="sol_tem" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="sol_tem" class="radio-btn" data-val="5" value="5">
             </div>
-            <div id="reason8" class="hidden-reason">
-                <textarea id="comodo_solfeo_porque" placeholder="¿Por qué?"></textarea>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Ejercicios y prácticas</span>
+            <div class="options">
+                <input type="radio" name="sol_prac" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="sol_prac" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="sol_prac" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="sol_prac" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="sol_prac" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Ambiente de aprendizaje</span>
+            <div class="options">
+                <input type="radio" name="sol_amb" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="sol_amb" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="sol_amb" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="sol_amb" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="sol_amb" class="radio-btn" data-val="5" value="5">
             </div>
         </div>
 
+        <div class="section-title">Evaluación Docente de Solfeo</div>
         <div class="question-group">
-            <label>9. ¿Quién es tu profesor de Solfeo?</label>
-            <select id="maestro_solfeo" required>
-                <option value="">Selecciona profesor...</option>
+            <select id="docente_solfeo" required>
+                <option value="">Selecciona profesor de Solfeo...</option>
                 <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option>
                 <option>Prof. Valeska</option><option>Prof. María Elena</option>
             </select>
         </div>
 
-        <div class="question-group">
-            <label>10. Dinos qué te gustaría que hiciéramos para mejorar</label>
-            <textarea id="mejorar_general" required placeholder="Queremos escucharte..."></textarea>
+        <div class="rating-row">
+            <span class="rating-label">Claridad al explicar</span>
+            <div class="options">
+                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Dominio del área</span>
+            <div class="options">
+                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Trato y respeto</span>
+            <div class="options">
+                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="5" value="5">
+            </div>
+        </div>
+        <div class="rating-row">
+            <span class="rating-label">Motivación y apoyo</span>
+            <div class="options">
+                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="1" value="1" required>
+                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="2" value="2">
+                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="3" value="3">
+                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="4" value="4">
+                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="5" value="5">
+            </div>
         </div>
 
-        <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR ENCUESTA</button>
+        <div class="question-group" style="margin-top:20px;">
+            <label>¿Qué fue lo mejor del curso y del docente?</label>
+            <textarea id="mejor_sol" placeholder="Escribe aquí..." required></textarea>
+        </div>
+        <div class="question-group">
+            <label>¿Qué aspectos deberían mejorar?</label>
+            <textarea id="mejorar_sol" placeholder="Escribe aquí..." required></textarea>
+        </div>
+
+        <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR EVALUACIÓN</button>
     </form>
 </div>
-
-<script>
-    // Función para animar la aparición de campos ocultos
-    function toggleReason(id, show) {
-        const el = document.getElementById(id);
-        if(show) {
-            el.style.display = 'block';
-            el.classList.add('animate__animated', 'animate__fadeInDown');
-        } else {
-            el.style.display = 'none';
-        }
-    }
-</script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
@@ -303,45 +354,20 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    document.getElementById('encuestaForm').addEventListener('submit', async (e) => {
+    document.getElementById('evaluacionForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btnEnviar');
         btn.disabled = true;
-        btn.innerText = "GUARDANDO...";
+        btn.innerText = "PROCESANDO...";
+
+        const getVal = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
 
         const datos = {
-            instrumento: document.getElementById('instrumento').value,
-            horario: document.getElementById('horario').value,
-            ensenanza_instrumento: document.getElementById('ensenanza_instrumento').value,
-            aprendio_instrumento: document.querySelector('input[name="aprendio_instrumento"]:checked').value,
-            aprendio_instrumento_porque: document.getElementById('aprendio_instrumento_porque').value || "",
-            comodo_maestro: document.querySelector('input[name="comodo_maestro"]:checked').value,
-            maestro_instrumento: document.getElementById('maestro_instrumento').value,
-            mejorar_maestro: document.getElementById('mejorar_maestro').value,
-            ensenanza_solfeo: document.getElementById('ensenanza_solfeo').value,
-            aprendio_solfeo: document.querySelector('input[name="aprendio_solfeo"]:checked').value,
-            aprendio_solfeo_porque: document.getElementById('aprendio_solfeo_porque').value || "",
-            comodo_solfeo: document.querySelector('input[name="comodo_solfeo"]:checked').value,
-            comodo_solfeo_porque: document.getElementById('comodo_solfeo_porque').value || "",
-            maestro_solfeo: document.getElementById('maestro_solfeo').value,
-            mejorar_general: document.getElementById('mejorar_general').value,
-            fecha: serverTimestamp()
-        };
-
-        try {
-            await addDoc(collection(db, "encuestas"), datos);
-            // Animación de éxito
-            btn.innerText = "¡LISTO!";
-            alert("¡Encuesta guardada con éxito! Dios te bendiga.");
-            window.location.href = "index.html";
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error al conectar con Firebase.");
-            btn.disabled = false;
-            btn.innerText = "GUARDAR ENCUESTA";
-        }
-    });
-</script>
-
-</body>
-</html>
+            curso: document.getElementById('curso').value,
+            // Evaluación Instrumento
+            inst_organizacion: getVal('inst_org'),
+            inst_calidad: getVal('inst_cal'),
+            inst_practica: getVal('inst_prac'),
+            inst_ambiente: getVal('inst_amb'),
+            docente_instrumento: document.getElementById('docente_inst').value,
+            doc_inst_clari
