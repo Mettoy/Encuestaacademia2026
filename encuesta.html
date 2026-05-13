@@ -3,72 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación Académica | Adoración Viva</title>
+    <title>Encuesta Académica | Adoración Viva</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <style>
         :root { --dark-blue: #0a192f; --light-blue: #112240; --gold: #c5a059; --text-gray: #a8b2d1; }
         body { background-color: var(--dark-blue); color: white; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .form-container { background: var(--light-blue); max-width: 800px; width: 100%; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border-top: 5px solid var(--gold); }
+        .form-container { background: var(--light-blue); max-width: 850px; width: 100%; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border-top: 5px solid var(--gold); }
         .header { text-align: center; margin-bottom: 30px; }
-        h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin: 0; }
-        .section-title { color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); margin: 30px 0 15px; padding-bottom: 10px; text-transform: uppercase; font-size: 1rem; }
-        .rating-row { display: flex; justify-content: space-between; align-items: center; background: rgba(10, 25, 47, 0.5); padding: 10px 15px; margin-bottom: 5px; border-radius: 10px; }
-        .options { display: flex; gap: 5px; }
-        .radio-btn { appearance: none; width: 30px; height: 30px; border: 2px solid #233554; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .radio-btn::before { content: attr(data-val); color: var(--text-gray); font-size: 0.8rem; font-weight: bold; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); margin: 0; font-size: 1.8rem; }
+        .section-title { color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); margin: 35px 0 15px; padding-bottom: 10px; text-transform: uppercase; font-size: 1.1rem; font-weight: 600; }
+        .instruction { background: rgba(197, 160, 89, 0.1); padding: 15px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 20px; border-left: 3px solid var(--gold); }
+        
+        /* Estilo de Filas de Evaluación */
+        .rating-row { display: flex; justify-content: space-between; align-items: center; background: rgba(10, 25, 47, 0.5); padding: 12px 18px; margin-bottom: 6px; border-radius: 10px; transition: 0.3s; }
+        .rating-row:hover { background: rgba(197, 160, 89, 0.05); }
+        .row-label { flex: 1; font-size: 0.9rem; }
+        .options { display: flex; gap: 8px; }
+        
+        /* Botones 1-5 Custom */
+        .radio-btn { appearance: none; width: 34px; height: 34px; border: 2px solid #233554; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: 0.3s; }
+        .radio-btn::before { content: attr(data-val); color: var(--text-gray); font-weight: bold; font-size: 0.9rem; }
         .radio-btn:checked { background: var(--gold); border-color: var(--gold); }
         .radio-btn:checked::before { color: var(--dark-blue); }
-        select, textarea { width: 100%; padding: 12px; background: var(--dark-blue); border: 1px solid #233554; border-radius: 10px; color: white; margin-bottom: 15px; font-family: inherit; }
-        .btn-submit { background: var(--gold); color: var(--dark-blue); width: 100%; padding: 18px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-top: 20px; }
+
+        select, textarea { width: 100%; padding: 14px; background: var(--dark-blue); border: 1px solid #233554; border-radius: 12px; color: white; margin-top: 8px; font-family: inherit; outline: none; box-sizing: border-box; }
+        select:focus, textarea:focus { border-color: var(--gold); }
+        label { font-weight: 600; font-size: 0.9rem; color: var(--gold); }
+        .optional { color: var(--text-gray); font-weight: normal; font-size: 0.8rem; }
+
+        .btn-submit { background: var(--gold); color: var(--dark-blue); width: 100%; padding: 20px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.1rem; margin-top: 40px; text-transform: uppercase; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(197,160,89,0.3); }
     </style>
 </head>
 <body>
 
 <div class="form-container">
     <div class="header">
-        <h1>Evaluación de Desempeño</h1>
-        <p style="color: var(--gold)">Academia Adoración Viva</p>
+        <h1>Encuesta de Evaluación Musical</h1>
+        <p style="color: var(--text-gray)">Academia Adoración Viva</p>
     </div>
 
     <form id="evaluacionForm">
-        <label>Selecciona tu Curso</label>
-        <select id="curso" required>
-            <option value="">-- Seleccionar --</option>
-            <option>Piano</option><option>Guitarra Acústica</option><option>Guitarra Eléctrica</option>
-            <option>Canto</option><option>Batería</option><option>Violín</option><option>Bajo</option>
-        </select>
+        <!-- CURSO PRINCIPAL -->
+        <div style="margin-bottom: 25px;">
+            <label>Curso de Instrumento</label>
+            <select id="curso" required>
+                <option value="">-- Selecciona tu curso --</option>
+                <option>Piano</option><option>Guitarra Acústica</option><option>Guitarra Eléctrica</option>
+                <option>Canto</option><option>Batería</option><option>Violín</option><option>Bajo</option><option>Iniciación Musical</option>
+            </select>
+        </div>
 
-        <!-- SECCIÓN INSTRUMENTO -->
-        <div class="section-title">1. Sobre el Curso de Instrumento</div>
-        <div class="rating-row"><span>Organización</span><div class="options" data-group="inst_org"></div></div>
-        <div class="rating-row"><span>Calidad del Contenido</span><div class="options" data-group="inst_cal"></div></div>
-        <div class="rating-row"><span>Ejercicios Prácticos</span><div class="options" data-group="inst_prac"></div></div>
+        <div class="instruction">Califica del 1 (Muy malo) al 5 (Excelente)</div>
 
-        <label style="margin-top:15px; display:block;">Docente de Instrumento</label>
+        <!-- EVALUACIÓN CURSO INSTRUMENTO -->
+        <div class="section-title">Evaluación del Curso</div>
+        <div class="rating-row"><span class="row-label">Organización del curso</span><div class="options" data-group="inst_org"></div></div>
+        <div class="rating-row"><span class="row-label">Calidad del contenido</span><div class="options" data-group="inst_cal"></div></div>
+        <div class="rating-row"><span class="row-label">Prácticas y ejercicios</span><div class="options" data-group="inst_prac"></div></div>
+        <div class="rating-row"><span class="row-label">Ambiente de aprendizaje</span><div class="options" data-group="inst_amb"></div></div>
+
+        <!-- EVALUACIÓN DOCENTE INSTRUMENTO -->
+        <div class="section-title">Evaluación del Docente</div>
+        <label>Nombre del Docente</label>
         <select id="docente_inst" required>
-            <option value="">-- Seleccionar Maestro --</option>
+            <option value="">-- Seleccionar --</option>
             <option>Prof. Hilde</option><option>Prof. Meyling</option><option>Prof. Oscar</option><option>Prof. Peter</option>
             <option>Prof. Edwing</option><option>Prof. Melky</option><option>Prof. Rebeca</option><option>Prof. Abraham</option>
+            <option>Prof. George</option><option>Prof. Elias</option><option>Prof. Valeska</option><option>Prof. María Elena</option><option>Prof. Erik</option>
         </select>
-        <div class="rating-row"><span>Claridad del Maestro</span><div class="options" data-group="doc_inst_clar"></div></div>
+        <div style="margin-top: 15px;">
+            <div class="rating-row"><span class="row-label">Claridad al explicar</span><div class="options" data-group="doc_inst_clar"></div></div>
+            <div class="rating-row"><span class="row-label">Dominio musical y técnico</span><div class="options" data-group="doc_inst_dom"></div></div>
+            <div class="rating-row"><span class="row-label">Trato y respeto</span><div class="options" data-group="doc_inst_resp"></div></div>
+            <div class="rating-row"><span class="row-label">Motivación y apoyo</span><div class="options" data-group="doc_inst_mot"></div></div>
+        </div>
 
-        <!-- SECCIÓN SOLFEO -->
-        <div class="section-title">2. Sobre el Curso de Solfeo</div>
-        <label>Docente de Solfeo</label>
+        <!-- OPINIÓN INSTRUMENTO -->
+        <div class="section-title">Opinión <span class="optional">(Opcional)</span></div>
+        <label>¿Qué fue lo mejor del curso y del docente?</label>
+        <textarea id="mejor_inst" rows="2"></textarea>
+        <label style="margin-top:10px; display:block;">¿Qué aspectos deberían mejorar?</label>
+        <textarea id="mejorar_inst" rows="2"></textarea>
+
+        <!-- CURSO SOLFEO -->
+        <div class="section-title">Curso de Solfeo <span style="color: #e74c3c;">(Obligatorio)</span></div>
+        <div class="rating-row"><span class="row-label">Organización</span><div class="options" data-group="sol_org"></div></div>
+        <div class="rating-row"><span class="row-label">Claridad de los temas</span><div class="options" data-group="sol_tem"></div></div>
+        <div class="rating-row"><span class="row-label">Ejercicios y prácticas</span><div class="options" data-group="sol_prac"></div></div>
+        <div class="rating-row"><span class="row-label">Ambiente de aprendizaje</span><div class="options" data-group="sol_amb"></div></div>
+
+        <!-- DOCENTE SOLFEO -->
+        <label style="margin-top: 15px; display: block;">Docente de Solfeo</label>
         <select id="docente_solfeo" required>
-            <option value="">-- Seleccionar Maestro --</option>
-            <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option><option>Prof. Valeska</option>
+            <option value="">-- Seleccionar --</option>
+            <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option><option>Prof. Valeska</option><option>Prof. María Elena</option>
         </select>
-        <div class="rating-row"><span>Claridad en Solfeo</span><div class="options" data-group="sol_clar"></div></div>
-        <div class="rating-row"><span>Utilidad de los Temas</span><div class="options" data-group="sol_tem"></div></div>
+        <div style="margin-top: 15px;">
+            <div class="rating-row"><span class="row-label">Claridad al explicar</span><div class="options" data-group="doc_sol_clar"></div></div>
+            <div class="rating-row"><span class="row-label">Dominio del área</span><div class="options" data-group="doc_sol_dom"></div></div>
+            <div class="rating-row"><span class="row-label">Trato y respeto</span><div class="options" data-group="doc_sol_resp"></div></div>
+            <div class="rating-row"><span class="row-label">Motivación y apoyo</span><div class="options" data-group="doc_sol_mot"></div></div>
+        </div>
 
-        <!-- COMENTARIOS -->
-        <div class="section-title">3. Opiniones Finales</div>
-        <label>¿Qué fue lo que más te gustó?</label>
-        <textarea id="mejor_inst" rows="3" required></textarea>
-
-        <label>¿Qué sugerencia nos darías para mejorar?</label>
-        <textarea id="mejorar_inst" rows="3" required></textarea>
+        <div class="section-title">Opinión Solfeo</div>
+        <label>¿Qué fue lo mejor de Solfeo?</label>
+        <textarea id="mejor_sol" rows="2" required></textarea>
+        <label style="margin-top:10px; display:block;">¿Qué aspectos deberían mejorar?</label>
+        <textarea id="mejorar_sol" rows="2" required></textarea>
 
         <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR EVALUACIÓN</button>
     </form>
@@ -91,7 +133,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Generar radio buttons dinámicamente para ahorrar espacio en código
+    // Generar botones 1-5 automáticamente en cada sección
     document.querySelectorAll('.options').forEach(div => {
         const name = div.getAttribute('data-group');
         for (let i = 1; i <= 5; i++) {
@@ -103,33 +145,50 @@
         e.preventDefault();
         const btn = document.getElementById('btnEnviar');
         btn.disabled = true;
-        btn.innerText = "PROCESANDO...";
+        btn.innerText = "GUARDANDO...";
 
-        const getRadio = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
+        const getV = (name) => {
+            const el = document.querySelector(`input[name="${name}"]:checked`);
+            return el ? el.value : "0";
+        };
 
-        const ticket = {
+        const data = {
             curso: document.getElementById('curso').value,
-            inst_organizacion: getRadio('inst_org'),
-            inst_calidad: getRadio('inst_cal'),
-            inst_practica: getRadio('inst_prac'),
+            // Instrumento
+            inst_organizacion: getV('inst_org'),
+            inst_calidad: getV('inst_cal'),
+            inst_practica: getV('inst_prac'),
+            inst_ambiente: getV('inst_amb'),
             docente_instrumento: document.getElementById('docente_inst').value,
-            doc_inst_claridad: getRadio('doc_inst_clar'),
-            docente_solfeo: document.getElementById('docente_solfeo').value,
-            sol_claridad: getRadio('sol_clar'),
-            sol_temas: getRadio('sol_tem'),
+            doc_inst_claridad: getV('doc_inst_clar'),
+            doc_inst_dominio: getV('doc_inst_dom'),
+            doc_inst_respeto: getV('doc_inst_resp'),
+            doc_inst_motivacion: getV('doc_inst_mot'),
             mejor_instrumento: document.getElementById('mejor_inst').value,
             mejorar_instrumento: document.getElementById('mejorar_inst').value,
+            // Solfeo
+            sol_organizacion: getV('sol_org'),
+            sol_temas: getV('sol_tem'),
+            sol_practica: getV('sol_prac'),
+            sol_ambiente: getV('sol_amb'),
+            docente_solfeo: document.getElementById('docente_solfeo').value,
+            doc_sol_claridad: getV('doc_sol_clar'),
+            doc_sol_dominio: getV('doc_sol_dom'),
+            doc_sol_respeto: getV('doc_sol_resp'),
+            doc_sol_motivacion: getV('doc_sol_mot'),
+            mejor_solfeo: document.getElementById('mejor_sol').value,
+            mejorar_solfeo: document.getElementById('mejorar_sol').value,
             fecha: serverTimestamp()
         };
 
         try {
-            await addDoc(collection(db, "evaluaciones"), ticket);
-            alert("¡Muchas gracias! Tu evaluación se guardó con éxito.");
+            await addDoc(collection(db, "evaluaciones"), data);
+            alert("¡Gracias! Tu evaluación ha sido registrada.");
             window.location.href = "index.html";
-        } catch (error) {
-            console.error(error);
-            alert("Error de conexión. Intenta de nuevo.");
+        } catch (err) {
+            alert("Error al guardar. Verifica tu conexión.");
             btn.disabled = false;
+            btn.innerText = "GUARDAR EVALUACIÓN";
         }
     });
 </script>
