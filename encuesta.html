@@ -7,95 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { 
-            --dark-blue: #0a192f; 
-            --light-blue: #112240; 
-            --gold: #c5a059; 
-            --text-gray: #a8b2d1; 
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body { 
-            background-color: var(--dark-blue); 
-            color: white; 
-            font-family: 'Montserrat', sans-serif; 
-            margin: 0; padding: 20px; 
-            display: flex; justify-content: center; 
-        }
-
-        .form-container { 
-            background: var(--light-blue); 
-            max-width: 800px; width: 100%; 
-            padding: 40px; border-radius: 25px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
-            border-top: 5px solid var(--gold);
-            animation: fadeInDown; animation-duration: 0.8s;
-        }
-
+        :root { --dark-blue: #0a192f; --light-blue: #112240; --gold: #c5a059; --transition: all 0.3s ease; }
+        body { background-color: var(--dark-blue); color: white; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .form-container { background: var(--light-blue); max-width: 800px; width: 100%; padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border-top: 5px solid var(--gold); animation: fadeInDown 0.8s; }
         .header { text-align: center; margin-bottom: 40px; }
-        .header img { width: 110px; margin-bottom: 15px; transition: var(--transition); }
-        .header img:hover { transform: scale(1.1) rotate(3deg); }
-        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 2rem; margin: 0; }
-
-        .section-title { 
-            color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
-            margin: 40px 0 20px; padding-bottom: 10px; 
-            font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        .instruction { 
-            background: rgba(197, 160, 89, 0.1); padding: 15px; 
-            border-radius: 10px; font-size: 0.85rem; margin-bottom: 25px;
-            border-left: 3px solid var(--gold); color: var(--text-gray);
-        }
-
+        .header img { width: 100px; margin-bottom: 15px; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 0; }
+        .section-title { color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); margin: 40px 0 20px; padding-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; font-size: 1.1rem; }
+        .instruction { background: rgba(197, 160, 89, 0.1); padding: 15px; border-radius: 10px; font-size: 0.85rem; margin-bottom: 25px; border-left: 3px solid var(--gold); }
         .question-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 12px; font-weight: 600; color: #fff; }
-
-        select, textarea { 
-            width: 100%; padding: 14px; background: var(--dark-blue); 
-            border: 1px solid #233554; border-radius: 12px; color: white; 
-            font-family: 'Montserrat', sans-serif; outline: none; transition: var(--transition);
-        }
-        select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(197, 160, 89, 0.2); }
-
-        /* Estilo de Tabla de Evaluación (Escala 1-5) */
-        .rating-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            background: rgba(10, 25, 47, 0.5);
-            padding: 12px 20px;
-            margin-bottom: 8px;
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-        .rating-row:hover { background: rgba(197, 160, 89, 0.05); transform: translateX(5px); }
-        .rating-label { font-size: 0.9rem; color: var(--text-gray); }
-        .options { display: flex; gap: 10px; }
-        
-        .radio-btn {
-            appearance: none; width: 35px; height: 35px;
-            border: 2px solid #233554; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: var(--transition); position: relative;
-        }
-        .radio-btn::before { content: attr(data-val); color: var(--text-gray); font-weight: bold; }
+        label { display: block; margin-bottom: 12px; font-weight: 600; }
+        select, textarea { width: 100%; padding: 14px; background: var(--dark-blue); border: 1px solid #233554; border-radius: 12px; color: white; font-family: 'Montserrat', sans-serif; outline: none; transition: var(--transition); }
+        select:focus, textarea:focus { border-color: var(--gold); }
+        .rating-row { display: grid; grid-template-columns: 1fr auto; align-items: center; background: rgba(10, 25, 47, 0.5); padding: 12px 20px; margin-bottom: 8px; border-radius: 12px; transition: var(--transition); }
+        .rating-row:hover { background: rgba(197, 160, 89, 0.05); }
+        .options { display: flex; gap: 8px; }
+        .radio-btn { appearance: none; width: 35px; height: 35px; border: 2px solid #233554; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); }
+        .radio-btn::before { content: attr(data-val); color: #a8b2d1; font-weight: bold; }
         .radio-btn:checked { background: var(--gold); border-color: var(--gold); }
         .radio-btn:checked::before { color: var(--dark-blue); }
-
-        .btn-submit { 
-            background: var(--gold); color: var(--dark-blue); 
-            width: 100%; padding: 20px; border: none; border-radius: 50px; 
-            font-weight: bold; font-size: 1.2rem; cursor: pointer; 
-            transition: var(--transition); margin-top: 40px; text-transform: uppercase;
-        }
-        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(197, 160, 89, 0.4); }
-
-        @media (max-width: 600px) {
-            .rating-row { grid-template-columns: 1fr; gap: 15px; text-align: center; }
-            .options { justify-content: center; }
-        }
+        .btn-submit { background: var(--gold); color: var(--dark-blue); width: 100%; padding: 20px; border: none; border-radius: 50px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: var(--transition); margin-top: 30px; text-transform: uppercase; }
+        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(197,160,89,0.3); }
+        @media (max-width: 600px) { .rating-row { grid-template-columns: 1fr; text-align: center; gap: 10px; } .options { justify-content: center; } }
     </style>
 </head>
 <body>
@@ -108,7 +41,7 @@
 
     <form id="evaluacionForm">
         <div class="question-group">
-            <label>Curso / Instrumento</label>
+            <label>Instrumento / Curso</label>
             <select id="curso" required>
                 <option value="">Selecciona tu curso...</option>
                 <option>Piano</option><option>Guitarra Acústica</option><option>Guitarra Eléctrica</option>
@@ -117,223 +50,47 @@
             </select>
         </div>
 
-        <div class="instruction">
-            <strong>Escala de Calificación:</strong><br>
-            1 = Muy malo | 2 = Malo | 3 = Regular | 4 = Bueno | 5 = Excelente
-        </div>
+        <div class="instruction">1 = Muy malo | 2 = Malo | 3 = Regular | 4 = Bueno | 5 = Excelente</div>
 
-        <!-- EVALUACIÓN DEL CURSO INSTRUMENTO -->
         <div class="section-title">Evaluación del Curso</div>
-        <div id="evaluacion_curso_instrumento">
-            <!-- Filas Generadas -->
-            <div class="rating-row">
-                <span class="rating-label">Organización del curso</span>
-                <div class="options">
-                    <input type="radio" name="inst_org" class="radio-btn" data-val="1" value="1" required>
-                    <input type="radio" name="inst_org" class="radio-btn" data-val="2" value="2">
-                    <input type="radio" name="inst_org" class="radio-btn" data-val="3" value="3">
-                    <input type="radio" name="inst_org" class="radio-btn" data-val="4" value="4">
-                    <input type="radio" name="inst_org" class="radio-btn" data-val="5" value="5">
-                </div>
-            </div>
-            <div class="rating-row">
-                <span class="rating-label">Calidad del contenido</span>
-                <div class="options">
-                    <input type="radio" name="inst_cal" class="radio-btn" data-val="1" value="1" required>
-                    <input type="radio" name="inst_cal" class="radio-btn" data-val="2" value="2">
-                    <input type="radio" name="inst_cal" class="radio-btn" data-val="3" value="3">
-                    <input type="radio" name="inst_cal" class="radio-btn" data-val="4" value="4">
-                    <input type="radio" name="inst_cal" class="radio-btn" data-val="5" value="5">
-                </div>
-            </div>
-            <div class="rating-row">
-                <span class="rating-label">Prácticas y ejercicios</span>
-                <div class="options">
-                    <input type="radio" name="inst_prac" class="radio-btn" data-val="1" value="1" required>
-                    <input type="radio" name="inst_prac" class="radio-btn" data-val="2" value="2">
-                    <input type="radio" name="inst_prac" class="radio-btn" data-val="3" value="3">
-                    <input type="radio" name="inst_prac" class="radio-btn" data-val="4" value="4">
-                    <input type="radio" name="inst_prac" class="radio-btn" data-val="5" value="5">
-                </div>
-            </div>
-            <div class="rating-row">
-                <span class="rating-label">Ambiente de aprendizaje</span>
-                <div class="options">
-                    <input type="radio" name="inst_amb" class="radio-btn" data-val="1" value="1" required>
-                    <input type="radio" name="inst_amb" class="radio-btn" data-val="2" value="2">
-                    <input type="radio" name="inst_amb" class="radio-btn" data-val="3" value="3">
-                    <input type="radio" name="inst_amb" class="radio-btn" data-val="4" value="4">
-                    <input type="radio" name="inst_amb" class="radio-btn" data-val="5" value="5">
-                </div>
-            </div>
-        </div>
+        <div class="rating-row"><span>Organización del curso</span><div class="options">
+            <input type="radio" name="inst_org" class="radio-btn" data-val="1" value="1" required><input type="radio" name="inst_org" class="radio-btn" data-val="2" value="2"><input type="radio" name="inst_org" class="radio-btn" data-val="3" value="3"><input type="radio" name="inst_org" class="radio-btn" data-val="4" value="4"><input type="radio" name="inst_org" class="radio-btn" data-val="5" value="5">
+        </div></div>
+        <div class="rating-row"><span>Calidad del contenido</span><div class="options">
+            <input type="radio" name="inst_cal" class="radio-btn" data-val="1" value="1" required><input type="radio" name="inst_cal" class="radio-btn" data-val="2" value="2"><input type="radio" name="inst_cal" class="radio-btn" data-val="3" value="3"><input type="radio" name="inst_cal" class="radio-btn" data-val="4" value="4"><input type="radio" name="inst_cal" class="radio-btn" data-val="5" value="5">
+        </div></div>
+        <div class="rating-row"><span>Prácticas y ejercicios</span><div class="options">
+            <input type="radio" name="inst_prac" class="radio-btn" data-val="1" value="1" required><input type="radio" name="inst_prac" class="radio-btn" data-val="2" value="2"><input type="radio" name="inst_prac" class="radio-btn" data-val="3" value="3"><input type="radio" name="inst_prac" class="radio-btn" data-val="4" value="4"><input type="radio" name="inst_prac" class="radio-btn" data-val="5" value="5">
+        </div></div>
 
-        <!-- DOCENTE INSTRUMENTO -->
-        <div class="section-title">Evaluación del Docente (Instrumento)</div>
-        <div class="question-group">
-            <select id="docente_inst" required>
-                <option value="">Selecciona tu profesor...</option>
-                <option>Prof. Hilde</option><option>Prof. Meyling</option><option>Prof. Oscar</option>
-                <option>Prof. Peter</option><option>Prof. Edwing</option><option>Prof. Melky</option>
-                <option>Prof. Rebeca</option><option>Prof. Abraham</option><option>Prof. George</option>
-                <option>Prof. Elias</option><option>Prof. Valeska</option><option>Prof. María Elena</option>
-                <option>Prof. Erik</option>
-            </select>
-        </div>
-
-        <div class="rating-row">
-            <span class="rating-label">Claridad al explicar</span>
-            <div class="options">
-                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Dominio musical y técnico</span>
-            <div class="options">
-                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_inst_dom" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Trato y respeto</span>
-            <div class="options">
-                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_inst_resp" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Motivación y apoyo</span>
-            <div class="options">
-                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_inst_mot" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
+        <div class="section-title">Evaluación del Docente</div>
+        <select id="docente_inst" required style="margin-bottom: 20px;">
+            <option value="">Selecciona tu profesor...</option>
+            <option>Prof. Hilde</option><option>Prof. Meyling</option><option>Prof. Oscar</option><option>Prof. Peter</option><option>Prof. Edwing</option><option>Prof. Melky</option><option>Prof. Rebeca</option><option>Prof. Abraham</option><option>Prof. George</option><option>Prof. Elias</option><option>Prof. Valeska</option><option>Prof. María Elena</option><option>Prof. Erik</option>
+        </select>
+        <div class="rating-row"><span>Claridad al explicar</span><div class="options">
+            <input type="radio" name="doc_inst_clar" class="radio-btn" data-val="1" value="1" required><input type="radio" name="doc_inst_clar" class="radio-btn" data-val="2" value="2"><input type="radio" name="doc_inst_clar" class="radio-btn" data-val="3" value="3"><input type="radio" name="doc_inst_clar" class="radio-btn" data-val="4" value="4"><input type="radio" name="doc_inst_clar" class="radio-btn" data-val="5" value="5">
+        </div></div>
 
         <div class="question-group" style="margin-top:20px;">
-            <label>¿Qué fue lo mejor del curso y del docente?</label>
-            <textarea id="mejor_inst" placeholder="Escribe aquí..." required></textarea>
+            <label>¿Qué fue lo mejor?</label>
+            <textarea id="mejor_inst" required></textarea>
         </div>
         <div class="question-group">
-            <label>¿Qué aspectos deberían mejorar?</label>
-            <textarea id="mejorar_inst" placeholder="Escribe aquí..." required></textarea>
+            <label>¿Qué mejorarías?</label>
+            <textarea id="mejorar_inst" required></textarea>
         </div>
 
-        <!-- SECCIÓN SOLFEO -->
-        <div class="section-title">Evaluación Curso de Solfeo</div>
-        <div class="rating-row">
-            <span class="rating-label">Organización del curso</span>
-            <div class="options">
-                <input type="radio" name="sol_org" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="sol_org" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="sol_org" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="sol_org" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="sol_org" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Claridad de los temas</span>
-            <div class="options">
-                <input type="radio" name="sol_tem" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="sol_tem" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="sol_tem" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="sol_tem" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="sol_tem" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Ejercicios y prácticas</span>
-            <div class="options">
-                <input type="radio" name="sol_prac" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="sol_prac" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="sol_prac" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="sol_prac" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="sol_prac" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Ambiente de aprendizaje</span>
-            <div class="options">
-                <input type="radio" name="sol_amb" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="sol_amb" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="sol_amb" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="sol_amb" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="sol_amb" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
+        <div class="section-title">Evaluación de Solfeo</div>
+        <select id="docente_solfeo" required style="margin-bottom: 20px;">
+            <option value="">Docente de Solfeo...</option>
+            <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option><option>Prof. Valeska</option><option>Prof. María Elena</option>
+        </select>
+        <div class="rating-row"><span>Claridad Solfeo</span><div class="options">
+            <input type="radio" name="sol_clar" class="radio-btn" data-val="1" value="1" required><input type="radio" name="sol_clar" class="radio-btn" data-val="2" value="2"><input type="radio" name="sol_clar" class="radio-btn" data-val="3" value="3"><input type="radio" name="sol_clar" class="radio-btn" data-val="4" value="4"><input type="radio" name="sol_clar" class="radio-btn" data-val="5" value="5">
+        </div></div>
 
-        <div class="section-title">Evaluación Docente de Solfeo</div>
-        <div class="question-group">
-            <select id="docente_solfeo" required>
-                <option value="">Selecciona profesor de Solfeo...</option>
-                <option>Prof. Peter</option><option>Prof. Melky</option><option>Prof. Rebeca</option>
-                <option>Prof. Valeska</option><option>Prof. María Elena</option>
-            </select>
-        </div>
-
-        <div class="rating-row">
-            <span class="rating-label">Claridad al explicar</span>
-            <div class="options">
-                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_sol_clar" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Dominio del área</span>
-            <div class="options">
-                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_sol_dom" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Trato y respeto</span>
-            <div class="options">
-                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_sol_resp" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-        <div class="rating-row">
-            <span class="rating-label">Motivación y apoyo</span>
-            <div class="options">
-                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="1" value="1" required>
-                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="2" value="2">
-                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="3" value="3">
-                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="4" value="4">
-                <input type="radio" name="doc_sol_mot" class="radio-btn" data-val="5" value="5">
-            </div>
-        </div>
-
-        <div class="question-group" style="margin-top:20px;">
-            <label>¿Qué fue lo mejor del curso y del docente?</label>
-            <textarea id="mejor_sol" placeholder="Escribe aquí..." required></textarea>
-        </div>
-        <div class="question-group">
-            <label>¿Qué aspectos deberían mejorar?</label>
-            <textarea id="mejorar_sol" placeholder="Escribe aquí..." required></textarea>
-        </div>
-
-        <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR EVALUACIÓN</button>
+        <button type="submit" id="btnEnviar" class="btn-submit">GUARDAR Y FINALIZAR</button>
     </form>
 </div>
 
@@ -357,17 +114,30 @@
     document.getElementById('evaluacionForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = document.getElementById('btnEnviar');
-        btn.disabled = true;
-        btn.innerText = "PROCESANDO...";
+        btn.disabled = true; btn.innerText = "GUARDANDO...";
 
         const getVal = (name) => document.querySelector(`input[name="${name}"]:checked`).value;
 
         const datos = {
             curso: document.getElementById('curso').value,
-            // Evaluación Instrumento
             inst_organizacion: getVal('inst_org'),
             inst_calidad: getVal('inst_cal'),
             inst_practica: getVal('inst_prac'),
-            inst_ambiente: getVal('inst_amb'),
             docente_instrumento: document.getElementById('docente_inst').value,
-            doc_inst_clari
+            doc_inst_claridad: getVal('doc_inst_clar'),
+            mejor_instrumento: document.getElementById('mejor_inst').value,
+            mejorar_instrumento: document.getElementById('mejorar_inst').value,
+            docente_solfeo: document.getElementById('docente_solfeo').value,
+            sol_claridad: getVal('sol_clar'),
+            fecha: serverTimestamp()
+        };
+
+        try {
+            await addDoc(collection(db, "evaluaciones"), datos);
+            alert("¡Evaluación guardada! Gracias por tu tiempo.");
+            window.location.href = "index.html";
+        } catch (e) { alert("Error al guardar"); btn.disabled = false; }
+    });
+</script>
+</body>
+</html>
