@@ -4,29 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encuesta de Satisfacción | Adoración Viva</title>
+    <!-- Fonts & Animations -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
     <style>
-        :root { --dark-blue: #0a192f; --light-blue: #112240; --gold: #c5a059; --text-gray: #a8b2d1; }
-        body { background-color: var(--dark-blue); color: white; font-family: 'Montserrat', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        .form-container { background: var(--light-blue); max-width: 700px; width: 100%; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border-top: 4px solid var(--gold); }
+        :root { 
+            --dark-blue: #0a192f; 
+            --light-blue: #112240; 
+            --gold: #c5a059; 
+            --text-gray: #a8b2d1; 
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            background-color: var(--dark-blue); 
+            color: white; 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            justify-content: center; 
+            overflow-x: hidden;
+        }
+
+        .form-container { 
+            background: var(--light-blue); 
+            max-width: 700px; 
+            width: 100%; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            border-top: 4px solid var(--gold);
+            animation: fadeInUp; /* Entrada suave */
+            animation-duration: 0.8s;
+        }
+
         .header { text-align: center; margin-bottom: 40px; }
-        .header img { width: 100px; margin-bottom: 15px; }
+        .header img { 
+            width: 100px; 
+            margin-bottom: 15px; 
+            transition: var(--transition);
+        }
+        .header img:hover { transform: rotate(5deg) scale(1.1); }
+
         h1 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.8rem; margin: 0; }
-        .section-title { color: var(--gold); border-bottom: 1px solid rgba(197, 160, 89, 0.3); margin: 30px 0 15px; padding-bottom: 5px; font-size: 1.1rem; text-transform: uppercase; }
-        .question-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; }
-        input[type="text"], select, textarea { width: 100%; padding: 12px; background: var(--dark-blue); border: 1px solid #233554; border-radius: 8px; color: white; font-family: 'Montserrat', sans-serif; box-sizing: border-box; outline: none; }
-        .hidden-reason { display: none; margin-top: 10px; }
-        .radio-group { display: flex; gap: 20px; background: var(--dark-blue); padding: 10px; border-radius: 8px; border: 1px solid #233554; }
-        .btn-submit { background: var(--gold); color: var(--dark-blue); width: 100%; padding: 15px; border: none; border-radius: 50px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 30px; text-transform: uppercase; }
-        .btn-submit:hover { transform: translateY(-3px); background: #e2be7a; box-shadow: 0 10px 20px rgba(197, 160, 89, 0.3); }
-        .btn-submit:disabled { background: #444; cursor: not-allowed; }
+
+        .section-title { 
+            color: var(--gold); 
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3); 
+            margin: 40px 0 20px; 
+            padding-bottom: 10px; 
+            font-size: 1.1rem; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .question-group { margin-bottom: 25px; transition: var(--transition); }
+
+        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 0.9rem; transition: var(--transition); }
+
+        input[type="text"], select, textarea { 
+            width: 100%; padding: 14px; 
+            background: var(--dark-blue); 
+            border: 1px solid #233554; 
+            border-radius: 12px; 
+            color: white; 
+            font-family: 'Montserrat', sans-serif; 
+            box-sizing: border-box; 
+            outline: none; 
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus { 
+            border-color: var(--gold); 
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animación para campos ocultos */
+        .hidden-reason { 
+            display: none; 
+            margin-top: 15px; 
+            animation: fadeInDown 0.4s;
+        }
+
+        .radio-group { 
+            display: flex; 
+            gap: 15px; 
+            background: var(--dark-blue); 
+            padding: 5px; 
+            border-radius: 12px; 
+            border: 1px solid #233554; 
+        }
+
+        .radio-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .radio-option:hover { background: rgba(197, 160, 89, 0.1); }
+
+        .btn-submit { 
+            background: var(--gold); 
+            color: var(--dark-blue); 
+            width: 100%; 
+            padding: 18px; 
+            border: none; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            margin-top: 30px; 
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .btn-submit:hover { 
+            transform: scale(1.02); 
+            background: #e2be7a; 
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4); 
+        }
+
+        .btn-submit:active { transform: scale(0.98); }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-blue); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <div class="header">
+    <div class="header animate__animated animate__fadeIn">
         <img src="https://i.ibb.co/fzzW4BxH/logo.png" alt="Logo">
         <h1>Encuesta de Satisfacción</h1>
     </div>
@@ -68,8 +188,8 @@
         <div class="question-group">
             <label>2. ¿Sientes que has aprendido algo en el transcurso de tiempo estudiado?</label>
             <div class="radio-group">
-                <label><input type="radio" name="aprendio_instrumento" value="Si" onclick="document.getElementById('reason2').style.display='none'" required> Sí</label>
-                <label><input type="radio" name="aprendio_instrumento" value="No" onclick="document.getElementById('reason2').style.display='block'"> No</label>
+                <label class="radio-option"><input type="radio" name="aprendio_instrumento" value="Si" onclick="toggleReason('reason2', false)" required> Sí</label>
+                <label class="radio-option"><input type="radio" name="aprendio_instrumento" value="No" onclick="toggleReason('reason2', true)"> No</label>
             </div>
             <div id="reason2" class="hidden-reason">
                 <textarea id="aprendio_instrumento_porque" placeholder="Cuéntanos por qué..."></textarea>
@@ -79,8 +199,8 @@
         <div class="question-group">
             <label>3. ¿Te sientes cómodo/a con el Maestro que te imparte tu instrumento?</label>
             <div class="radio-group">
-                <label><input type="radio" name="comodo_maestro" value="Si" required> Sí</label>
-                <label><input type="radio" name="comodo_maestro" value="No"> No</label>
+                <label class="radio-option"><input type="radio" name="comodo_maestro" value="Si" required> Sí</label>
+                <label class="radio-option"><input type="radio" name="comodo_maestro" value="No"> No</label>
             </div>
         </div>
 
@@ -116,8 +236,8 @@
         <div class="question-group">
             <label>7. ¿Sientes que has aprendido en el transcurso estudiado?</label>
             <div class="radio-group">
-                <label><input type="radio" name="aprendio_solfeo" value="Si" onclick="document.getElementById('reason7').style.display='none'" required> Sí</label>
-                <label><input type="radio" name="aprendio_solfeo" value="No" onclick="document.getElementById('reason7').style.display='block'"> No</label>
+                <label class="radio-option"><input type="radio" name="aprendio_solfeo" value="Si" onclick="toggleReason('reason7', false)" required> Sí</label>
+                <label class="radio-option"><input type="radio" name="aprendio_solfeo" value="No" onclick="toggleReason('reason7', true)"> No</label>
             </div>
             <div id="reason7" class="hidden-reason">
                 <textarea id="aprendio_solfeo_porque" placeholder="¿Por qué?"></textarea>
@@ -127,8 +247,8 @@
         <div class="question-group">
             <label>8. ¿Te sientes cómodo con el docente que te imparte solfeo?</label>
             <div class="radio-group">
-                <label><input type="radio" name="comodo_solfeo" value="Si" onclick="document.getElementById('reason8').style.display='none'" required> Sí</label>
-                <label><input type="radio" name="comodo_solfeo" value="No" onclick="document.getElementById('reason8').style.display='block'"> No</label>
+                <label class="radio-option"><input type="radio" name="comodo_solfeo" value="Si" onclick="toggleReason('reason8', false)" required> Sí</label>
+                <label class="radio-option"><input type="radio" name="comodo_solfeo" value="No" onclick="toggleReason('reason8', true)"> No</label>
             </div>
             <div id="reason8" class="hidden-reason">
                 <textarea id="comodo_solfeo_porque" placeholder="¿Por qué?"></textarea>
@@ -153,6 +273,19 @@
     </form>
 </div>
 
+<script>
+    // Función para animar la aparición de campos ocultos
+    function toggleReason(id, show) {
+        const el = document.getElementById(id);
+        if(show) {
+            el.style.display = 'block';
+            el.classList.add('animate__animated', 'animate__fadeInDown');
+        } else {
+            el.style.display = 'none';
+        }
+    }
+</script>
+
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
     import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
@@ -176,7 +309,6 @@
         btn.disabled = true;
         btn.innerText = "GUARDANDO...";
 
-        // Captura de datos sincronizada con Resultados.html
         const datos = {
             instrumento: document.getElementById('instrumento').value,
             horario: document.getElementById('horario').value,
@@ -198,11 +330,13 @@
 
         try {
             await addDoc(collection(db, "encuestas"), datos);
+            // Animación de éxito
+            btn.innerText = "¡LISTO!";
             alert("¡Encuesta guardada con éxito! Dios te bendiga.");
             window.location.href = "index.html";
         } catch (error) {
             console.error("Error:", error);
-            alert("Error al conectar con Firebase. Revisa las reglas de seguridad.");
+            alert("Error al conectar con Firebase.");
             btn.disabled = false;
             btn.innerText = "GUARDAR ENCUESTA";
         }
