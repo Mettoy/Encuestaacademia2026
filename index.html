@@ -3,213 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia Adoración Viva</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <title>¡Feliz Cumpleaños!</title>
     <style>
-        :root {
-            --dark-blue: #0a192f; /* Azul súper oscuro */
-            --gold: #c5a059;
-        }
-
-        body, html {
+        /* --- CONFIGURACIÓN GENERAL --- */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: var(--dark-blue);
-            font-family: 'Montserrat', sans-serif;
-            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle, #0d1b2a, #000814);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* --- FONDO DE CONFETI ANIMADO --- */
+        .confetti-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        .card-wrapper {
+            position: relative;
+            width: 380px;
+            height: 500px;
+            z-index: 10;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Pantalla de inicio para activar audio */
-        #tap-to-start {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: var(--dark-blue);
+        /* --- EL SOBRE VITUAL (PANTALLA 1) --- */
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 300px;
+            background: #0056b3;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             cursor: pointer;
-        }
-
-        .pulse {
-            animation: pulse-animation 2s infinite;
-            color: var(--gold);
-            font-size: 1.2rem;
-            letter-spacing: 2px;
-        }
-
-        @keyframes pulse-animation {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
-        }
-
-        /* Contenedor de secuencias */
-        .scene {
-            display: none;
-            text-align: center;
-            max-width: 80%;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
-        }
-
-        .logo-img {
-            width: 200px;
-            filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.2));
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-top: 20px;
-        }
-
-        .buttons-group {
+            transition: transform 0.8s ease, opacity 0.5s ease;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn {
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
+        /* Solapa del sobre */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -160px;
+            left: 0;
+            border-left: 190px solid transparent;
+            border-right: 190px solid transparent;
+            border-bottom: 160px solid #0056b3;
+            transform-origin: bottom;
+            transition: transform 0.6s ease 0.2s;
+            z-index: 3;
+        }
+
+        /* Sello dorado */
+        .seal {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            border-radius: 50%;
+            position: absolute;
+            z-index: 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000814;
             font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-            cursor: pointer;
-            border: none;
-            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+            transition: transform 0.4s ease;
         }
 
-        .btn-main { background: var(--gold); color: var(--dark-blue); }
-        .btn-secondary { background: transparent; color: white; border: 1px solid white; }
-        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+        .envelope:hover .seal {
+            transform: scale(1.1);
+        }
 
-        /* Estilo del Modal para Contraseña */
-        #password-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
+        /* --- ESTADO ABIERTO (ANIMACIÓN DEL SOBRE) --- */
+        .card-wrapper.open .envelope::before {
+            transform: rotateX(180deg) translateY(2px);
+            z-index: 1;
+        }
+
+        .card-wrapper.open .envelope {
+            transform: translateY(300px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- LA TARJETA INTERIOR (PANTALLA 2) --- */
+        .actual-card {
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 4px solid #ffd700;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: scale(0.8) translateY(-100px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .card-wrapper.open .actual-card {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* --- CONTENIDO DE LA TARJETA --- */
+        .title {
+            color: #0056b3;
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, #ffd700, transparent);
+            margin: 15px 0;
+        }
+
+        .message {
+            color: #333;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        /* Galería de imágenes pequeña / interactiva */
+        .photo-holder {
+            width: 100%;
+            height: 160px;
+            background: #eef1f6;
+            border-radius: 12px;
+            margin: 15px 0;
+            overflow: hidden;
+            border: 2px dashed #0056b3;
+            position: relative;
+            display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 200;
         }
 
-        .modal-content {
-            background: var(--dark-blue);
-            padding: 30px;
-            border: 1px solid var(--gold);
-            border-radius: 15px;
-            text-align: center;
+        .photo-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
 
-        input {
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 5px;
+        .photo-holder:hover img {
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        /* Botón de acción elegante */
+        .btn-action {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            color: #fff;
             border: none;
-            width: 80%;
-            text-align: center;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.6);
+            background: linear-gradient(135deg, #ffd700, #b8860b);
+            color: #000814;
+        }
+
+        /* --- CLASES DE ANIMACIÓN --- */
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 4px 10px rgba(255,215,0,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,215,0,0.8); }
+            100% { transform: scale(1); box-shadow: 0 4px 10px rgba(255,215,0,0.4); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
         }
     </style>
 </head>
 <body>
 
-    <!-- PASO 0: Pantalla de "Carga" para habilitar el sonido -->
-    <div id="tap-to-start" onclick="startExperience()">
-        <img src="https://i.ibb.co/fzzW4BxH/logo.png" width="100" style="margin-bottom: 20px;">
-        <div class="pulse">TOCA PARA INGRESAR</div>
-    </div>
+    <!-- Capa de Confeti -->
+    <div class="confetti-container" id="confetti-bg"></div>
 
-    <!-- PASO 1: LOGO -->
-    <div id="scene1" class="scene">
-        <img src="https://i.ibb.co/fzzW4BxH/logo.png" alt="Logo" class="logo-img">
-    </div>
+    <!-- Contenedor de la Tarjeta -->
+    <div class="card-wrapper" id="main-container">
+        
+        <!-- El Sobre (Pantalla de inicio) -->
+        <div class="envelope" onclick="openCard()">
+            <div class="seal">✨</div>
+        </div>
 
-    <!-- PASO 2: HOLA -->
-    <div id="scene2" class="scene">
-        <h2>Hola, Dios te bendiga</h2>
-    </div>
+        <!-- La Tarjeta Real -->
+        <div class="actual-card">
+            <div>
+                <h1 class="title">¡Felicidades!</h1>
+                <div class="divider"></div>
+                <p class="message">"Hoy celebramos tu vida, tus éxitos y la increíble persona que eres. Que este nuevo año esté lleno de momentos brillantes, sonrisas y metas cumplidas."</p>
+            </div>
 
-    <!-- PASO 3: MEJORAR -->
-    <div id="scene3" class="scene">
-        <h2>Ayúdanos a mejorar</h2>
-    </div>
+            <!-- Espacio para foto (Puedes cambiar el src por la foto que desees) -->
+            <div class="photo-holder">
+                <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80" alt="Celebración">
+            </div>
 
-    <!-- PASO 4: RESPONDE -->
-    <div id="scene4" class="scene">
-        <h2>Responde esta encuesta</h2>
-    </div>
-
-    <!-- PASO 5: BOTONES FINALES -->
-    <div id="scene5" class="scene">
-        <div class="buttons-group">
-            <button class="btn btn-main" onclick="location.href='encuesta.html'">RESPONDER</button>
-            <button class="btn btn-secondary" onclick="showModal()">VER RESULTADOS</button>
+            <div>
+                <button class="btn-action" onclick="celebrateMore()">¡Celebrar!</button>
+            </div>
         </div>
     </div>
-
-    <!-- MODAL DE CONTRASEÑA -->
-    <div id="password-modal">
-        <div class="modal-content">
-            <p>Ingresa la contraseña de acceso:</p>
-            <input type="password" id="pass-input" placeholder="Contraseña">
-            <br>
-            <button class="btn btn-main" onclick="checkPassword()">INGRESAR</button>
-            <button class="btn btn-secondary" style="margin-top:10px; font-size: 0.8rem;" onclick="hideModal()">CANCELAR</button>
-        </div>
-    </div>
-
-    <audio id="bgMusic" loop>
-        <source src="https://www.dropbox.com/scl/fi/c3o4j1tg1mxge0glgikqj/Glorioso-d-a-Glorious-Day-Passion-Ft.-Kristian-Stanfill-En-Esp-ol-Letra-Pista-M4A_128K.m4a?rlkey=asyz5vw3he62l02qy1j9cpvjx&st=wklkousf&raw=1" type="audio/mp4">
-    </audio>
 
     <script>
-        function startExperience() {
-            // Activar música
-            document.getElementById('bgMusic').play();
-            document.getElementById('tap-to-start').style.display = 'none';
+        // Generador automático de confeti elegante (tonos dorados y blancos)
+        const confettiContainer = document.getElementById('confetti-bg');
+        const colors = ['#ffd700', '#ffffff', '#e6c300', '#f4f4f9'];
 
-            // Iniciar secuencia de tiempos
-            showScene('scene1', 0);
-            showScene('scene2', 3000); // Aparece a los 3 seg
-            showScene('scene3', 6000); // Aparece a los 6 seg
-            showScene('scene4', 9000); // Aparece a los 9 seg
-            showScene('scene5', 12000); // Botones finales
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 5 + 's';
+            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            // Tamaños variados para dar profundidad
+            const size = Math.random() * 8 + 6 + 'px';
+            confetti.style.width = size;
+            confetti.style.height = size;
+            confettiContainer.appendChild(confetti);
         }
 
-        function showScene(id, delay) {
-            setTimeout(() => {
-                // Ocultar todas las escenas
-                document.querySelectorAll('.scene').forEach(s => s.style.display = 'none');
-                // Mostrar la actual
-                document.getElementById(id).style.display = 'block';
-            }, delay);
+        // Función para abrir el sobre
+        function openCard() {
+            document.getElementById('main-container').classList.add('open');
         }
 
-        function showModal() { document.getElementById('password-modal').style.display = 'flex'; }
-        function hideModal() { document.getElementById('password-modal').style.display = 'none'; }
-
-        function checkPassword() {
-            const pass = document.getElementById('pass-input').value.toLowerCase();
-            if (pass === "academiarobles") {
-                location.href = 'resultados.html';
-            } else {
-                alert("Contraseña incorrecta");
+        // Efecto extra al presionar el botón de la tarjeta
+        function celebrateMore() {
+            // Duplica la intensidad del confeti por un momento
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const extraConfetti = document.createElement('div');
+                    extraConfetti.classList.add('confetti');
+                    extraConfetti.style.left = Math.random() * 100 + 'vw';
+                    extraConfetti.style.top = '-20px';
+                    extraConfetti.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+                    extraConfetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confettiContainer.appendChild(extraConfetti);
+                    
+                    // Limpieza para no sobrecargar el navegador
+                    setTimeout(() => extraConfetti.remove(), 2500);
+                }, i * 50);
             }
         }
     </script>
