@@ -3,310 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Feliz Cumpleaños!</title>
+    <title>Mi Cumpleaños Sorpresa</title>
     <style>
-        /* --- CONFIGURACIÓN GENERAL --- */
+        /* --- CONFIGURACIÓN DE LUJO --- */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         body {
-            background: radial-gradient(circle, #0d1b2a, #000814);
+            background: linear-gradient(135deg, #020813 0%, #071930 50%, #0a2246 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            perspective: 1000px;
+            overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* --- FONDO DE CONFETI ANIMADO --- */
-        .confetti-container {
+        /* --- PARTÍCULAS DE LUZ AUTOMÁTICAS --- */
+        .ambient-glow {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ffd700;
-            border-radius: 50%;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- CONTENEDOR PRINCIPAL --- */
-        .card-wrapper {
-            position: relative;
-            width: 380px;
+            width: 500px;
             height: 500px;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- EL SOBRE VITUAL (PANTALLA 1) --- */
-        .envelope {
-            position: absolute;
-            width: 100%;
-            height: 300px;
-            background: #0056b3;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            cursor: pointer;
-            transition: transform 0.8s ease, opacity 0.5s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Solapa del sobre */
-        .envelope::before {
-            content: '';
-            position: absolute;
-            top: -160px;
-            left: 0;
-            border-left: 190px solid transparent;
-            border-right: 190px solid transparent;
-            border-bottom: 160px solid #0056b3;
-            transform-origin: bottom;
-            transition: transform 0.6s ease 0.2s;
-            z-index: 3;
-        }
-
-        /* Sello dorado */
-        .seal {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #ffd700, #b8860b);
-            border-radius: 50%;
-            position: absolute;
-            z-index: 4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000814;
-            font-weight: bold;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-            transition: transform 0.4s ease;
-        }
-
-        .envelope:hover .seal {
-            transform: scale(1.1);
-        }
-
-        /* --- ESTADO ABIERTO (ANIMACIÓN DEL SOBRE) --- */
-        .card-wrapper.open .envelope::before {
-            transform: rotateX(180deg) translateY(2px);
-            z-index: 1;
-        }
-
-        .card-wrapper.open .envelope {
-            transform: translateY(300px);
-            opacity: 0;
+            background: radial-gradient(circle, rgba(0, 86, 179, 0.2) 0%, transparent 70%);
+            top: -10%;
+            left: -10%;
+            animation: drift 15s infinite alternate ease-in-out;
             pointer-events: none;
         }
 
-        /* --- LA TARJETA INTERIOR (PANTALLA 2) --- */
-        .actual-card {
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(200px, 100px) scale(1.2); }
+        }
+
+        /* --- CONTENEDOR PRINCIPAL PREMIUM --- */
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 215, 0, 0.4); /* Línea sutil dorada superior */
             width: 100%;
-            height: 100%;
-            background: #ffffff;
-            border-radius: 20px;
-            border: 4px solid #ffd700;
-            padding: 30px;
+            max-width: 450px;
+            border-radius: 24px;
+            padding: 40px 30px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            
+            /* Animación de entrada automática */
             opacity: 0;
-            transform: scale(0.8) translateY(-100px);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
+            transform: translateY(40px);
+            animation: revealCard 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        .card-wrapper.open .actual-card {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
+        @keyframes revealCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* --- CONTENIDO DE LA TARJETA --- */
-        .title {
-            color: #0056b3;
-            font-size: 2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            animation: float 3s ease-in-out infinite;
+        /* --- CONTENEDOR DE LA FOTO --- */
+        .photo-container {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 25px auto;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, #ffd700, #b8860b, transparent);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: scale(0.7);
+            animation: revealPhoto 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
         }
 
-        .divider {
-            height: 3px;
-            background: linear-gradient(to right, transparent, #ffd700, transparent);
-            margin: 15px 0;
-        }
-
-        .message {
-            color: #333;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            font-style: italic;
-        }
-
-        /* Galería de imágenes pequeña / interactiva */
-        .photo-holder {
-            width: 100%;
-            height: 160px;
-            background: #eef1f6;
-            border-radius: 12px;
-            margin: 15px 0;
-            overflow: hidden;
-            border: 2px dashed #0056b3;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .photo-holder img {
+        .photo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            border-radius: 50%;
+            border: 3px solid #071930;
+            transition: transform 0.6s ease;
         }
 
-        .photo-holder:hover img {
-            transform: scale(1.1) rotate(2deg);
+        .photo-container:hover img {
+            transform: scale(1.05);
         }
 
-        /* Botón de acción elegante */
-        .btn-action {
-            background: linear-gradient(135deg, #0056b3, #004085);
-            color: #fff;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
+        @keyframes revealPhoto {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* --- TIPOGRAFÍA Y TEXTOS --- */
+        .tagline {
+            color: #ffd700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
             font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
-            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.6s;
         }
 
-        .btn-action:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 86, 179, 0.6);
-            background: linear-gradient(135deg, #ffd700, #b8860b);
-            color: #000814;
+        .main-title {
+            color: #ffffff;
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
         }
 
-        /* --- CLASES DE ANIMACIÓN --- */
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 4px 10px rgba(255,215,0,0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 4px 20px rgba(255,215,0,0.8); }
-            100% { transform: scale(1); box-shadow: 0 4px 10px rgba(255,215,0,0.4); }
+        .main-title span {
+            background: linear-gradient(135deg, #ffffff 30%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: #ffd700;
+            margin: 0 auto 25px auto;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.9s;
+        }
+
+        .description {
+            color: #a0aec0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1s;
+        }
+
+        /* --- BOTÓN DE WHATSAPP ELEGANTE --- */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: #ffffff;
+            color: #020813;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn id 0.8s ease forwards 1.2s;
+        }
+
+        /* Efecto destello de luz interno */
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-whatsapp:hover::before {
+            left: 100%;
+            transition: 0.6s;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
+            background: #ffd700;
+            color: #020813;
+        }
+
+        /* Icono de verificación limpio */
+        .btn-whatsapp svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* --- ANIMACIONES ADICIONALES --- */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Capa de Confeti -->
-    <div class="confetti-container" id="confetti-bg"></div>
+    <!-- Resplandor ambiental de fondo -->
+    <div class="ambient-glow"></div>
 
-    <!-- Contenedor de la Tarjeta -->
-    <div class="card-wrapper" id="main-container">
+    <!-- Tarjeta Principal -->
+    <div class="luxury-card">
         
-        <!-- El Sobre (Pantalla de inicio) -->
-        <div class="envelope" onclick="openCard()">
-            <div class="seal">✨</div>
+        <!-- Contenedor para tu Foto Reemplazable -->
+        <div class="photo-container">
+            <!-- Nota: Reemplaza este enlace por la URL de tu fotografía final -->
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" alt="Mi Foto">
         </div>
 
-        <!-- La Tarjeta Real -->
-        <div class="actual-card">
-            <div>
-                <h1 class="title">¡Felicidades!</h1>
-                <div class="divider"></div>
-                <p class="message">"Hoy celebramos tu vida, tus éxitos y la increíble persona que eres. Que este nuevo año esté lleno de momentos brillantes, sonrisas y metas cumplidas."</p>
-            </div>
+        <!-- Textos Conceptuales -->
+        <p class="tagline">Estás Invitado</p>
+        <h1 class="main-title">Mi Cumpleaños<br><span>Sorpresa</span></h1>
+        
+        <div class="divider"></div>
+        
+        <p class="description">
+            Hay momentos que merecen ser celebrados en grande y con las personas que hacen la vida especial. Te espero para compartir una noche exclusiva llena de misterio, elegancia y buena música.
+        </p>
 
-            <!-- Espacio para foto (Puedes cambiar el src por la foto que desees) -->
-            <div class="photo-holder">
-                <img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=500&q=80" alt="Celebración">
-            </div>
+        <!-- Botón de Confirmación Directo a WhatsApp -->
+        <!-- Nota: Cambia el número '50512345678' por tu número real con código de área -->
+        <a href="https://wa.me/50512345678?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20a%20tu%20Cumplea%C3%B1os%20Sorpresa.%20%C2%A1Ah%C3%AD%20estar%C3%A9!" class="btn-whatsapp" target="_blank">
+            <svg viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.451 5.42 1.453 5.441 0 9.864-4.42 9.868-9.863.002-2.637-1.023-5.116-2.884-6.98C17.169 1.898 14.7 1.87 12.01 1.87c-5.443 0-9.866 4.422-9.87 9.865-.001 1.948.506 3.848 1.47 5.466l-.933 3.409 3.49-.916z"/>
+            </svg>
+            Confirmar Asistencia
+        </a>
 
-            <div>
-                <button class="btn-action" onclick="celebrateMore()">¡Celebrar!</button>
-            </div>
-        </div>
     </div>
 
-    <script>
-        // Generador automático de confeti elegante (tonos dorados y blancos)
-        const confettiContainer = document.getElementById('confetti-bg');
-        const colors = ['#ffd700', '#ffffff', '#e6c300', '#f4f4f9'];
-
-        for (let i = 0; i < 50; i++) {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDelay = Math.random() * 5 + 's';
-            confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            // Tamaños variados para dar profundidad
-            const size = Math.random() * 8 + 6 + 'px';
-            confetti.style.width = size;
-            confetti.style.height = size;
-            confettiContainer.appendChild(confetti);
-        }
-
-        // Función para abrir el sobre
-        function openCard() {
-            document.getElementById('main-container').classList.add('open');
-        }
-
-        // Efecto extra al presionar el botón de la tarjeta
-        function celebrateMore() {
-            // Duplica la intensidad del confeti por un momento
-            for (let i = 0; i < 40; i++) {
-                setTimeout(() => {
-                    const extraConfetti = document.createElement('div');
-                    extraConfetti.classList.add('confetti');
-                    extraConfetti.style.left = Math.random() * 100 + 'vw';
-                    extraConfetti.style.top = '-20px';
-                    extraConfetti.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
-                    extraConfetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confettiContainer.appendChild(extraConfetti);
-                    
-                    // Limpieza para no sobrecargar el navegador
-                    setTimeout(() => extraConfetti.remove(), 2500);
-                }, i * 50);
-            }
-        }
-    </script>
 </body>
 </html>
